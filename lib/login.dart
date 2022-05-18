@@ -1,10 +1,14 @@
 // import 'package:flutter/cupertino.dart';
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, avoid_print, unused_import, prefer_const_constructors_in_immutables
 
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:teacherevaluation/controllers/Utilities.dart';
 import 'package:teacherevaluation/controllers/widgets.dart';
+
+import 'models/navbar.dart';
 
 // ignore: must_be_immutable
 class UserLogin extends StatefulWidget {
@@ -56,12 +60,16 @@ var password = TextEditingController();
               height: 45,
             ),
             MyButton(text: "Login",fontWeight: FontWeight.bold, onTap: () {
+              // username.text="2018-arid-1128";
+              // password.text="123";
+
               login(context);
+              navbarcall();
             }),
             const SizedBox(
               height: 20,
             ),
-            
+         
           ],
         ),
       ),
@@ -69,15 +77,40 @@ var password = TextEditingController();
   }
 
   Future<void> login(context) async {
-      var response = await http.post(Uri.parse("http://192.168.1.102/TeacherEvaluation/api/student/login?regno="+username.text+"& pass="+password.text),);
+       var request = await http.get(Uri.parse(Utilities.baseurl+"/api/student/login/" +username.text  +"/"+password.text ));
     
-      if (response.statusCode==200) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("login successfull")));
-        Navigator.pushNamed(context, '/View_Course');
-      } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text("invalid email/password")));
+    print('sending request...');
+
+    if (request.statusCode == 200) {
+      print(request.body.toString());
+      Utilities.regno=username.text;
+      Utilities.semester=request.body.toString();
+      print('OK Call');
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Login Successful!")));
+      Navigator.pushNamed(context, '/View_Course');
+    } else {
+      print('Not Uploaded');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Oops!Something went wrong")));
+    }
+  }
+
+  Future<List<Navbarmodel>> navbarcall() async {
+    final response = await http.get(
+        Uri.parse(Utilities.baseurl + '/api/student/NavBar/'+username.text+'/2021FM'));
+    var data = jsonDecode(response.body.toString());
+    if (response.statusCode == 200) {
+      Utilities.navbarlist.clear();
+      print(data);
+      for (Map<String, dynamic> i in data) {
+        Utilities.navbarlist.add(Navbarmodel.fromJson(i));
       }
-    } 
+      print(Utilities.navbarlist);
+      return Utilities.navbarlist;
+      
+    } else {
+      return Utilities.navbarlist;
+    }
+  }
   }
