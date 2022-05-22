@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_this
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_this, dead_code, avoid_unnecessary_containers, camel_case_types, unnecessary_import, unused_label, override_on_non_overriding_member, sized_box_for_whitespace, annotate_overrides, unnecessary_string_interpolations
 
 import 'dart:convert';
 
@@ -27,6 +27,8 @@ class _TeacherEvaluationState extends State<TeacherEvaluation> {
   bool valuesecond = false;  
   bool valuethird=false;
   List<Questionmodel> questionlist=[];
+
+  get children => null;
   Future<List<Questionmodel>> getallquestions() async {
     final response = await http.get(
         Uri.parse(Utilities.baseurl+'/api/student/GetQuestions'));
@@ -66,7 +68,7 @@ class _TeacherEvaluationState extends State<TeacherEvaluation> {
                     return Stack(
                       children: [
                         Container(
-                          padding: EdgeInsets.only(top: 255),
+                          padding: EdgeInsets.only(bottom: 60,top: 225),
                           height: MediaQuery.of(context).size.height,
                           width: double.infinity,
                           child: ListView.builder(
@@ -172,12 +174,12 @@ class _TeacherEvaluationState extends State<TeacherEvaluation> {
                           child: Column(
                             children: <Widget>[
                               SizedBox(
-                                height: 110,
+                                height: 724,
                               ),
-                              // 
+                              MyButton(text: "Save",fontWeight: FontWeight.bold, onTap: () {}),
                             ],
                           ),
-                        )
+                        ),
                       ],
                     );
                   }
@@ -195,7 +197,7 @@ Widget buildList(BuildContext context, int index) {
         color: Colors.white,
       ),
       width: double.infinity,
-      height: 350,
+      height: 400,
       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: InkWell(
@@ -219,99 +221,57 @@ Widget buildList(BuildContext context, int index) {
                     ),
                     SizedBox(
                       height: 6,
-                    ),
-                        Row(
-                          children: [
-                            Checkbox(  
-                      checkColor: Colors.greenAccent,  
-                      activeColor: Colors.red,  
-                      value: this.valuefirst,  
-                      // onChanged: (bool value) {  
-                            // setState(() {  
-                            //   this.valuefirst = value;  
-                            // });  
-                      // },  
-                      onChanged: null,
-                    ),
-                    Text("Excellent"),
-                          ],
-                        ),
-                    SizedBox(width: 5,),
-                     Row(
-                       children: [
-                         Checkbox(  
-                          checkColor: Colors.greenAccent,  
-                          activeColor: Colors.red,  
-                          value: this.valuefirst,  
-                          // onChanged: (bool value) {  
-                            // setState(() {  
-                            //   this.valuefirst = value;  
-                            // });  
-                          // },  
-                          onChanged: null,
-                    ),
-                    Text("Average"),
-                       ],
-                     ),
-                    SizedBox(width: 5,),
-                    Row(
-                          children: [
-                            Checkbox(  
-                      checkColor: Colors.greenAccent,  
-                      activeColor: Colors.red,  
-                      value: this.valuefirst,  
-                      // onChanged: (bool value) {  
-                            // setState(() {  
-                            //   this.valuefirst = value;  
-                            // });  
-                      // },  
-                      onChanged: null,
-                    ),
-                    Text("BELOW AVERAGE"),
-                          ],
-                        ),
-                    SizedBox(width: 5,),
-                    Row(
-                          children: [
-                            Checkbox(  
-                      checkColor: Colors.greenAccent,  
-                      activeColor: Colors.red,  
-                      value: this.valuefirst,  
-                      // onChanged: (bool value) {  
-                            // setState(() {  
-                            //   this.valuefirst = value;  
-                            // });  
-                      // },  
-                      onChanged: null,
-                    ),
-                    Text("GOOD"),
-                          ],
-                        ),
-                    SizedBox(width: 5,),
-                     Row(
-                       children: [
-                         Checkbox(  
-                          checkColor: Colors.greenAccent,  
-                          activeColor: Colors.red,  
-                          value: this.valuefirst,  
-                          onChanged: (bool ?value) {  
-                            setState(() {  
-                              // this.valuefirst = value;  
-                            });  
-                          },  
-                    ),
-                    Text("POOR"),
-                       ],
-                     ),
-
-                    // Center(child: OutlinedButton.icon(onPressed: (){}, icon: Icon(Icons.event_available_outlined), label: Text("Evaluate"))), 
-                  ],
-                ),
-              ),
+                    ),  
+        ListTile(  
+          title: const Text('Excellent'),  
+          leading: Radio(  
+            value:5,  
+            groupValue: _site, onChanged: (Object? value) {  },   
+          ),  
+        ),  
+        ListTile(  
+          title: const Text('Average'),  
+          leading: Radio(  
+            value: 4,  
+            groupValue: _site, onChanged: (Object? value) {  },  
+          ),  
+        ),  
+        ListTile(  
+          title: const Text('Below Average'),  
+          leading: Radio(  
+            value: 3,  
+            groupValue: _site, onChanged: (Object? value) {  },              
+          ),  
+        ), 
+        ListTile(  
+          title: const Text('Good'),  
+          leading: Radio(  
+            value: 2,  
+            groupValue: _site, onChanged: (Object? value) {  },  
+            
+          ),  
+        ),
+        ListTile(  
+          title: const Text('Poor'),  
+          leading: Radio(  
+            value: 1,  
+            groupValue: _site, onChanged: (Object? value) {  },  
+            
+                  ),  
+                 ), 
+                ],
+               ),
+              ), 
             )
           ],
-        ),
+        ),  
       ),
-    );
+    ); 
   }
+}
+
+class BestTutorSite {
+}
+
+class _site {
 }
