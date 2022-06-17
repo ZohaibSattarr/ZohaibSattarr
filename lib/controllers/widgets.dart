@@ -1,11 +1,16 @@
+
+
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'Utilities.dart';
+//import 'package:flutter_radio_group/radio_list.dart';
 
 
 class MyButton extends StatelessWidget {
   String text;
   double? textSize = 12;
-  FontWeight? fontWeight = FontWeight.w400;
+  FontWeight? fontWeight = FontWeight.w600;
   VoidCallback onTap;
   MyButton(
       {Key? key,
@@ -17,24 +22,193 @@ class MyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: InkWell(
-        onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.all(18),
-          margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-          width: Utilities.getSize(context).width*0.4,
-          decoration: BoxDecoration(
-            color: Colors.deepPurple,
-            borderRadius: BorderRadius.circular(13),
-          ),
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        margin: EdgeInsets.only(top: 5, bottom: 5),
+        width: Utilities.getSize(context).width * 0.9,
+        padding: EdgeInsets.only(top: 16, bottom: 16),
+        decoration: BoxDecoration(
+          color: Colors.deepPurple,
+          boxShadow: [
+            BoxShadow(color: Colors.white.withOpacity(0.4), blurRadius: 10)
+          ],
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Center(
           child: Text(
             text,
-            textAlign: TextAlign.center,
             style: TextStyle(
-                fontSize: 20, fontWeight: fontWeight, color: Colors.black,),
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
           ),
         ),
+      ),
+    );
+  }
+}
+//DropDownButton
+
+
+class MyDropDownButton extends StatefulWidget {
+  const MyDropDownButton({Key? key}) : super(key: key);
+
+  @override
+  State<MyDropDownButton> createState() => _MyDropDownButton();
+}
+
+class _MyDropDownButton extends State<MyDropDownButton> {
+  
+
+  @override
+  Widget build(BuildContext context) {  
+    return Container(
+      margin: EdgeInsets.only(top: 5, bottom: 5),
+        width: Utilities.getSize(context).width * 0.9,
+        padding: EdgeInsets.only(top: 1, bottom: 1,left: 10),
+        decoration: BoxDecoration(
+          //color: Colors.deepPurple,
+          // boxShadow: [
+          //   BoxShadow(color: Colors.white.withOpacity(0.4), blurRadius: 10)
+          // ],
+          border: Border.all(color: Colors.white),
+          borderRadius: BorderRadius.circular(12),
+        ),
+      child: DropdownButton<String>(
+        value: Utilities.dropdownValue,
+        isExpanded: true,
+        icon:  Icon(Icons.arrow_drop_down),
+        //elevation: 40,
+        style:  TextStyle(color: Colors.deepPurple,fontSize:20),
+        underline: Container(
+          height: 2,
+          color: Colors.grey[300],
+        ),
+        onChanged: (String? newValue) {
+          setState(() {
+            Utilities.dropdownValue = newValue!;
+           // print(dropdownValue);
+          }
+          );
+        },
+        items: <String>['Student', 'Admin', 'Director']
+            .map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+// class AwesomeDropdown extends StatefulWidget {
+//   @override
+//   _AwesomeDropdownState createState() => _AwesomeDropdownState();
+// }
+
+// class _AwesomeDropdownState extends State<AwesomeDropdown> {
+//   final List<String> textList = ["Student", "Admin","Director"];
+//   late String _currentItemSelected;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     _currentItemSelected = textList[0];
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//        margin: EdgeInsets.only(top: 5, bottom: 5),
+//         width: Utilities.getSize(context).width * 0.9,
+//         padding: EdgeInsets.only(top: 5, bottom: 5,left: 10),
+//         decoration: BoxDecoration(
+//           //color: Colors.deepPurple,
+//           // boxShadow: [
+//           //   BoxShadow(color: Colors.white.withOpacity(0.4), blurRadius: 10)
+//           // ],
+//           border: Border.all(color: Colors.white),
+//           borderRadius: BorderRadius.circular(12),
+//         ),
+//       child: PopupMenuButton<String>(
+//         itemBuilder: (context) {
+//           return textList.map((str) {
+//             return PopupMenuItem(
+//               value: str,
+//               child: Text(str),
+//             );
+//           }).toList();
+//         },
+//         child: Row(
+//           mainAxisSize: MainAxisSize.min,
+//           children: <Widget>[
+//             Text(_currentItemSelected),
+//             Icon(Icons.arrow_drop_down),
+//           ],
+//         ),
+//         onSelected: (v) {
+//           setState(() {
+//             print('!!!===== $v');
+//             _currentItemSelected = v;
+//           });
+//         },
+//       ),
+//     );
+//   }
+// }
+
+
+
+
+
+class SemesterdropDown extends StatefulWidget {
+  const SemesterdropDown({Key? key}) : super(key: key);
+
+  @override
+  State<SemesterdropDown> createState() => _SemesterdropDown();
+}
+
+class _SemesterdropDown extends State<SemesterdropDown> {
+  
+
+  @override
+  Widget build(BuildContext context) {  
+    return Container(
+      margin: EdgeInsets.only(top: 5, bottom: 5),
+        width: Utilities.getSize(context).width * 0.9,
+        padding: EdgeInsets.only(top: 1, bottom: 1,left: 10),
+        decoration: BoxDecoration(
+          //color: Colors.deepPurple,
+          // boxShadow: [
+          //   BoxShadow(color: Colors.white.withOpacity(0.4), blurRadius: 10)
+          // ],
+          border: Border.all(color: Colors.white),
+          borderRadius: BorderRadius.circular(12),
+        ),
+      child: DropdownButton<String>(
+        value: Utilities.semestervalue,
+        isExpanded: true,
+        icon:  Icon(Icons.arrow_drop_down),
+        //elevation: 40,
+        style:  TextStyle(color: Colors.deepPurple,fontSize:20),
+        underline: Container(
+          height: 2,
+          color: Colors.grey[300],
+        ),
+        onChanged: (String? newValue) {
+          setState(() {
+            Utilities.semestervalue = newValue!;
+           // print(dropdownValue);
+          }
+          );
+        },
+        items: <String>['2022SM', '2021FM', '2021SM']
+            .map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
       ),
     );
   }
@@ -59,9 +233,13 @@ class _MyBackgroundState extends State<MyBackground> {
       height: Utilities.getSize(context).height,
       width: Utilities.getSize(context).width,
       child: widget.child,
-      decoration: const BoxDecoration(
-          color: Colors.white60,
-         ),
+      color: Colors.grey[300],
+      // decoration: const BoxDecoration(
+      //     image: DecorationImage(
+      //   fit: BoxFit.cover,
+      //   image: AssetImage("assets/images/background_image.png"),
+      // )
+      // ),
     );
   }
 }
@@ -71,8 +249,11 @@ class _MyBackgroundState extends State<MyBackground> {
 class MyInputField extends StatefulWidget {
   TextEditingController controller;
   String hint;
-  MyInputField({Key? key, required this.controller, required this.hint})
-      : super(key: key);
+  MyInputField({
+    Key? key,
+    required this.controller,
+    required this.hint,
+  }) : super(key: key);
 
   @override
   State<MyInputField> createState() => _MyInputFieldState();
@@ -82,19 +263,20 @@ class _MyInputFieldState extends State<MyInputField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 5),
-      child: TextField(
+      margin: EdgeInsets.only(top: 10),
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        border: Border.all(color: Colors.white),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10.0),
+        child: TextField(
           controller: widget.controller,
-          style: const TextStyle(fontSize: 16, color: Colors.black),
-          cursorColor: Colors.black,
-          decoration: InputDecoration(
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.black, width: 1.0),
-            ),
-            hintText: widget.hint,
-            hintStyle: const TextStyle(
-                fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
-          )),
+          decoration:
+              InputDecoration(border: InputBorder.none, hintText: widget.hint),
+        ),
+      ),
     );
   }
 }
@@ -105,8 +287,12 @@ class _MyInputFieldState extends State<MyInputField> {
 class MyPasswordInputField extends StatefulWidget {
   TextEditingController controller;
   String hint;
-  MyPasswordInputField({Key? key, required this.controller, required this.hint})
-      : super(key: key);
+
+  MyPasswordInputField({
+    Key? key,
+    required this.controller,
+    required this.hint,
+  }) : super(key: key);
 
   @override
   State<MyPasswordInputField> createState() => _MyPasswordInputFieldState();
@@ -116,21 +302,23 @@ class _MyPasswordInputFieldState extends State<MyPasswordInputField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 5),
-      child: TextField(
+      margin: EdgeInsets.only(top: 10),
+      decoration: BoxDecoration(
+        color: Colors.grey[200],
+        border: Border.all(color: Colors.white),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10.0),
+        child: TextField(
           controller: widget.controller,
           obscureText: true,
-          obscuringCharacter: '*',
-          style: const TextStyle(fontSize: 16, color: Colors.black),
-          cursorColor: Colors.black,
           decoration: InputDecoration(
-            focusedBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.black, width: 1.0),
-            ),
+            border: InputBorder.none,
             hintText: widget.hint,
-            hintStyle: const TextStyle(
-                fontSize: 16, fontWeight: FontWeight.w600, color: Colors.black),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -310,6 +498,80 @@ class MyTextfield extends StatelessWidget {
     );
   }
 }
+
+// //RadioButton
+
+
+// class RadioGroup extends StatefulWidget{
+//   @override
+//   State createState() {
+//     // TODO: implement createState
+//     return RadioGroupWidget();
+//   }
+
+// }
+
+// class RadioGroupWidget extends State
+// {
+  
+
+//   late final listplatform;
+//   int selected=1;
+
+//   RadioGroupWidget(this.listplatform);
+//   @override
+//   void initState() {
+//     // TODO: implement initState
+//     super.initState();
+//     listplatform=[];
+
+//     listplatform.add(PlatFormList("Flutter", 1));
+//     listplatform.add(PlatFormList("Go", 2));
+//     listplatform.add(PlatFormList("JAVA", 3));
+//     listplatform.add(PlatFormList("Kotlin", 4));
+//     listplatform.add(PlatFormList("Android", 5));
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     // TODO: implement build
+//     return Column(
+//       children: [
+
+//         Padding(
+//             padding : EdgeInsets.all(14.0),
+//             child: Text('Selected Platform = '+listplatform[selected-1].platform, style: TextStyle(fontSize: 23))
+//         ),
+
+//         Container(
+//           height: 350.0,
+//           child: Column(
+//             children:
+//             listplatform.map((data) => RadioListTile(
+//               title: Text("${data.platform}"),
+//               groupValue: selected,
+//               value: data.index,
+//               onChanged: (val) {
+//                 setState(() {
+//                   selected = data.index;
+//                 });
+//               },
+//             )).toList(),
+//           ),
+//         ),
+
+//       ],
+//     );
+//   }
+
+// }
+// class PlatFormList {
+//   String platform;
+//   int index;
+//   PlatFormList(this.platform,this.index);
+// }
+
+
 
 
 

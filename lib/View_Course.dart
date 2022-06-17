@@ -1,4 +1,5 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore: duplicate_ignore
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, duplicate_ignore, unused_import, sized_box_for_whitespace, avoid_unnecessary_containers
 
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_adjacent_string_concatenation, unnecessary_string_interpolations
 
@@ -10,7 +11,6 @@ import 'package:teacherevaluation/controllers/widgets.dart';
 import 'package:teacherevaluation/models/courses.dart';
 import 'package:http/http.dart' as http;
 import 'package:teacherevaluation/models/navbar.dart';
-
 import 'controllers/Utilities.dart';
 
 
@@ -29,7 +29,7 @@ class _ViewCourses extends State<ViewCourses> {
   
   Future<List<Courses>> getallcourses() async {
     final response = await http.get(
-        Uri.parse(Utilities.baseurl + '/api/student/getcourses/2018-Arid-1128/2021FM'));
+        Uri.parse(Utilities.baseurl + '/TeacherEvalutionV2/api/student/getcourses/'+Utilities.regno+'/2021FM'));
     var data = jsonDecode(response.body.toString());
     if (response.statusCode == 200) {
       Utilities.courseslist.clear();
@@ -219,7 +219,7 @@ Widget buildList(BuildContext context, int index) {
                     Row(
                       children: <Widget>[
                         Icon(
-                          Icons.email_outlined,
+                          CupertinoIcons.person_badge_plus,
                           color: secondary,
                           size: 20,
                         ),
@@ -237,7 +237,7 @@ Widget buildList(BuildContext context, int index) {
                     Row(
                       children: <Widget>[
                         Icon(
-                          CupertinoIcons.person_badge_plus,
+                          Icons.email_outlined,
                           color: secondary,
                           size: 20,
                         ),

@@ -2,6 +2,8 @@
 //
 //     final courses = coursesFromJson(jsonString);
 
+// ignore_for_file: non_constant_identifier_names
+
 import 'dart:convert';
 
 Courses coursesFromJson(String str) => Courses.fromJson(json.decode(str));
@@ -17,6 +19,7 @@ class Courses {
         required this.semesterNo,
         required this.empFirstname,
         required this.empLastname,
+        required this.emp_no,
     });
 
     String courseNo;
@@ -26,6 +29,7 @@ class Courses {
     String semesterNo;
     String empFirstname;
     String empLastname;
+    String emp_no;
 
     factory Courses.fromJson(Map<String, dynamic> json) => Courses(
         courseNo: json["Course_no"],
@@ -35,6 +39,7 @@ class Courses {
         semesterNo: json["SEMESTER_NO"],
         empFirstname: json["Emp_firstname"],
         empLastname: json["Emp_lastname"],
+        emp_no: json["Emp_no"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -45,5 +50,6 @@ class Courses {
         "SEMESTER_NO": semesterNo,
         "Emp_firstname": empFirstname,
         "Emp_lastname": empLastname,
+        "Emp_no":emp_no,
     };
 }
