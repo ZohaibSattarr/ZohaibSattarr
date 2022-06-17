@@ -2,8 +2,12 @@
 
 import 'dart:convert';
 
+import 'package:custom_radio_grouped_button/custom_radio_grouped_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:http/http.dart';
+
 import 'package:teacherevaluation/controllers/widgets.dart';
 import 'package:teacherevaluation/models/questionmodel.dart';
 import 'package:http/http.dart' as http;
@@ -16,9 +20,26 @@ class TeacherEvaluation extends StatefulWidget {
   @override
   State<TeacherEvaluation> createState() => _TeacherEvaluationState();
 }
-
+enum EvaluationAns {excellent, average,belowAverage,good,poor}
 class _TeacherEvaluationState extends State<TeacherEvaluation> {
+    EvaluationAns? _value = EvaluationAns.excellent;
+  //   Map<int,String> selectedValues= new Map<int,String>();
+  // @override
+  // void initState(){
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+  //     for(int i=0;i<3;i++)
+  //     {
+  //       selectedValues.putIfAbsent(i,()=>""); 
+  //     }
+  //     setState(() {
+        
+  //     });
+  //   });
+  // }
+
   @override
+
     final TextStyle dropdownmenuitem =
       TextStyle(color: Colors.black, fontSize: 19);
   final primary = Color.fromARGB(255, 71, 153, 207);
@@ -26,23 +47,23 @@ class _TeacherEvaluationState extends State<TeacherEvaluation> {
     bool valuefirst = false;  
   bool valuesecond = false;  
   bool valuethird=false;
-  List<Questionmodel> questionlist=[];
 
-  get children => null;
+
+ 
   Future<List<Questionmodel>> getallquestions() async {
     final response = await http.get(
-        Uri.parse(Utilities.baseurl+'/api/student/GetQuestions'));
+        Uri.parse(Utilities.baseurl+'/TeacherEvalutionV2/api/student/GetQuestions'));
     var data = jsonDecode(response.body.toString());
     if (response.statusCode == 200) {
-      questionlist.clear();
+      Utilities.questionlist.clear();
       for (Map<String, dynamic> i in data) {
-        questionlist.add(Questionmodel.fromJson(i));
+        Utilities.questionlist.add(Questionmodel.fromJson(i));
       }
-      print(questionlist);
-      return questionlist;
+      
+      return Utilities.questionlist;
       
     } else {
-      return questionlist;
+      return Utilities.questionlist;
     }
   }
   Widget build(BuildContext context) {
@@ -72,7 +93,7 @@ class _TeacherEvaluationState extends State<TeacherEvaluation> {
                           height: MediaQuery.of(context).size.height,
                           width: double.infinity,
                           child: ListView.builder(
-                              itemCount: questionlist.length,
+                              itemCount: Utilities.questionlist.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return buildList(context, index);
                               }),
@@ -176,7 +197,10 @@ class _TeacherEvaluationState extends State<TeacherEvaluation> {
                               SizedBox(
                                 height: 724,
                               ),
-                              MyButton(text: "Save",fontWeight: FontWeight.bold, onTap: () {}),
+                              MyButton(text: "Save",fontWeight: FontWeight.bold, onTap: () {
+                                EasyLoading.show();
+                                evalpost();
+                              }),
                             ],
                           ),
                         ),
@@ -213,7 +237,7 @@ Widget buildList(BuildContext context, int index) {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      questionlist[index].question1,
+                      Utilities.questionlist[index].question1,
                       style: TextStyle(
                           color: primary,
                           fontWeight: FontWeight.bold,
@@ -221,44 +245,105 @@ Widget buildList(BuildContext context, int index) {
                     ),
                     SizedBox(
                       height: 6,
-                    ),  
-        ListTile(  
-          title: const Text('Excellent'),  
-          leading: Radio(  
-            value:5,  
-            groupValue: _site, onChanged: (Object? value) {  },   
-          ),  
-        ),  
-        ListTile(  
-          title: const Text('Average'),  
-          leading: Radio(  
-            value: 4,  
-            groupValue: _site, onChanged: (Object? value) {  },  
-          ),  
-        ),  
-        ListTile(  
-          title: const Text('Below Average'),  
-          leading: Radio(  
-            value: 3,  
-            groupValue: _site, onChanged: (Object? value) {  },              
-          ),  
-        ), 
-        ListTile(  
-          title: const Text('Good'),  
-          leading: Radio(  
-            value: 2,  
-            groupValue: _site, onChanged: (Object? value) {  },  
-            
-          ),  
-        ),
-        ListTile(  
-          title: const Text('Poor'),  
-          leading: Radio(  
-            value: 1,  
-            groupValue: _site, onChanged: (Object? value) {  },  
-            
-                  ),  
-                 ), 
+                    ),
+                    CustomRadioButton(
+                             buttonLables: [
+                                    "Excellent",
+                                    "Average",
+                                    "Below Average",
+                                    "Good",
+                                    "Poor",
+                                     ],
+                             buttonValues: [
+                                    "Excellent",
+                                    "Average",
+                                    "Below Average",
+                                    "Good",
+                                    "Poor",
+                                     ],
+                             radioButtonValue: (value) => print(value),
+                             horizontal: true,
+                             selectedColor: Theme.of(context).colorScheme.secondary, unSelectedColor: Colors.white,
+    ),
+        // ListTile(  
+        //   title: const Text('Excellent'),  
+        //   leading: Radio<EvaluationAns>(  
+        //     value: EvaluationAns.excellent,  
+        //     groupValue: _value, 
+        //     onChanged: (EvaluationAns? value) {
+        //       setState(() {
+        //         _value=value;
+        //         Utilities.radiovalue=value.toString();
+                
+        //       });
+        //       },   
+        //   ),  
+        // ),  
+        // ListTile(  
+        //   title: const Text('Average'),  
+        //   leading: Radio<EvaluationAns>(  
+        //     value: EvaluationAns.average,  
+        //     groupValue: _value, 
+        //     onChanged: (EvaluationAns? value) {
+        //       setState(() {
+        //         _value=value;
+        //         Utilities.radiovalue=value.toString();
+                
+        //       });
+        //       },   
+        //   ),  
+        // ),   
+        // ListTile(  
+        //   title: const Text('Below Average'),  
+        //   leading: Radio<EvaluationAns>(  
+        //     value: EvaluationAns.belowAverage,  
+        //     groupValue: _value, 
+        //     onChanged: (EvaluationAns? value) {
+        //       setState(() {
+        //         _value=value;
+        //         Utilities.radiovalue=value.toString();
+                
+        //       });
+        //       },   
+        //   ),  
+        // ),  
+        // ListTile(  
+        //   title: const Text('Good'),  
+        //   leading: Radio<EvaluationAns>(  
+        //     value: EvaluationAns.good,  
+        //     groupValue: _value, 
+        //     onChanged: (EvaluationAns? value) {
+        //       setState(() {
+        //         _value=value;
+        //         Utilities.radiovalue=value.toString();
+                
+        //       });
+        //       },   
+        //   ),  
+        // ), 
+        // ListTile(  
+        //   title: const Text('Poor'),  
+        //   leading: Radio<EvaluationAns>(  
+        //     value: EvaluationAns.poor,  
+        //     groupValue: _value, 
+        //     onChanged: (EvaluationAns? value) {
+        //       setState(() {
+        //         _value=value;
+        //         Utilities.radiovalue=value.toString();
+        //         // for(int i=0;i<Utilities.questionlist.length;i++)
+        //         // {
+        //         //   Utilities.post.add({"Emp_no:"+Utilities.courseslist[index].emp_no,"Reg_No:"+Utilities.regno,
+        //         //   "Course_no:"+Utilities.courseslist[index].courseNo,"Discipline:BCS","Semester_No:"
+        //         //   +Utilities.semester,"Question_Desc:"+Utilities.questionlist[i].questionId.toString(),
+        //         //   "Answer_Desc:Poor","Answer_Marks:1"}
+        //         //   );
+        //         // }
+        //         // print(Utilities.post.toList());
+                
+        //       });
+        //       },   
+        //   ),  
+        // ),  
                 ],
                ),
               ), 
@@ -268,10 +353,50 @@ Widget buildList(BuildContext context, int index) {
       ),
     ); 
   }
+  evalpost() async {
+    int totalevaluatedquestion=Utilities.questionlist.length;
+    int saved=0;
+    for (int i=0;i<Utilities.questionlist.length;i++)
+    {++saved;
+      if(Utilities.radiovalue!='')
+      {
+        int ans_mark=1;
+        if(Utilities.radiovalue=='Excellent') ans_mark=5;
+        else if(Utilities.radiovalue=='Good') ans_mark=4;
+        else if(Utilities.radiovalue=='Average') ans_mark=3;
+        else if(Utilities.radiovalue=='Below Average') ans_mark=2;
+        else if(Utilities.radiovalue=='Poor') ans_mark=1;
+      
+      final uri = Uri.parse(Utilities.baseurl+'/TeacherEvalutionV2/api/student/addStdEvaluation');
+  final headers = {'Content-Type': 'application/json'};
+  var Data = {
+          "Emp_no":"Utilities.courseslist[i].emp_no" ,
+          "Reg_No": "Utilities.regno",
+          "Course_no": "Utilities.courseslist[i].courseNo",
+          "Discipline": "Utilities.courseslist[i].discipline",
+          "Semester_no": "Utilities.semester.toString()",
+          "Question_Desc": "Utilities.questionlist[i].questionId",
+          "Answer_Desc": "Utilities.radiovalue.toString()",
+          "Answer_Marks": "ans_mark.toString()",
+        };
+  
+  String jsonBody = json.encode(Data);
+  final encoding = Encoding.getByName('utf-8');
+
+  http.Response response = await post(
+    uri,
+    headers: headers,
+    body: jsonBody,
+    encoding: encoding,
+  );
+
+  int statusCode = response.statusCode;
+  String responseBody = response.body;
+  EasyLoading.dismiss();
+    }}
 }
 
-class BestTutorSite {
 }
 
-class _site {
-}
+
+
