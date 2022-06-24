@@ -21,8 +21,8 @@ void main() {
     routes: {
       '/login': (context) => UserLogin(),
       '/View_Course':(context) =>ViewCourses(),
-      '/teacher_evaluation':(context) =>TeacherEvaluation(),
-      '/Report': (context) => BarChartDemo(),
+      //'/teacher_evaluation':(context) =>TeacherEvaluation(),
+      '/Report': (context) => Report(),
     },
   ));
   // FlutterNativeSplash.remove();

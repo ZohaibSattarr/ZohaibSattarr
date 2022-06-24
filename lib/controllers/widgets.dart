@@ -1,9 +1,12 @@
 
 
-// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, prefer_typing_uninitialized_variables, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
+import '../models/bar_chart_model.dart';
 import 'Utilities.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
+
 //import 'package:flutter_radio_group/radio_list.dart';
 
 
@@ -159,7 +162,7 @@ class _MyDropDownButton extends State<MyDropDownButton> {
 
 
 
-
+//Semester_DropDownButton
 
 class SemesterdropDown extends StatefulWidget {
   const SemesterdropDown({Key? key}) : super(key: key);
@@ -174,7 +177,7 @@ class _SemesterdropDown extends State<SemesterdropDown> {
   @override
   Widget build(BuildContext context) {  
     return Container(
-      margin: EdgeInsets.only(top: 5, bottom: 5),
+      //margin: EdgeInsets.only(top: 5, bottom: 5),
         width: Utilities.getSize(context).width * 0.9,
         padding: EdgeInsets.only(top: 1, bottom: 1,left: 10),
         decoration: BoxDecoration(
@@ -213,6 +216,197 @@ class _SemesterdropDown extends State<SemesterdropDown> {
     );
   }
 }
+
+
+
+class CourseDropDown extends StatefulWidget {
+  int count;
+   CourseDropDown({Key? key, required this.count}) : super(key: key);
+
+
+  @override
+  State<CourseDropDown> createState() => _CourseDropDown();
+}
+
+class _CourseDropDown extends State<CourseDropDown> {
+  
+
+  @override
+  Widget build(BuildContext context) {  
+    return Container(
+      //margin: EdgeInsets.only(top: 5, bottom: 5),
+        width: 90,
+        padding: EdgeInsets.only(top: 1, bottom: 1,left: 10),
+        decoration: BoxDecoration(
+          //color: Colors.deepPurple,
+          // boxShadow: [
+          //   BoxShadow(color: Colors.white.withOpacity(0.4), blurRadius: 10)
+          // ],
+          border: Border.all(color: Colors.white),
+          borderRadius: BorderRadius.circular(12),
+        ),
+      child:  DropdownButton<String>(
+        value: Utilities.coursedropdownvalue,
+          isExpanded: true,
+        icon:  Icon(Icons.arrow_drop_down),
+        //elevation: 40,
+        style:  TextStyle(color: Colors.deepPurple,fontSize:20),
+        underline: Container(
+          height: 2,
+          color: Colors.grey[300],
+        ),
+           onChanged: (String? newValue) {
+          setState(() {
+            Utilities.coursedropdownvalue = newValue!;
+           // print(dropdownValue);
+           Utilities.selectedCourcesreport.add({
+              'count' : widget.count,
+              'type' : 'course',
+              'value' : newValue
+            });
+          }
+          );
+           },
+          items: Utilities.CourseList.map((data) {
+              return DropdownMenuItem<String>(
+                value:data.title
+                ,
+                child: Text(
+                  data.title,
+                   style: TextStyle(color: Colors.deepPurpleAccent),
+                ),
+              );
+            }).toList(),
+        ),
+    );
+  }
+}
+//teacherdropdown
+
+class TeacherDropDown extends StatefulWidget {
+  int count;
+  TeacherDropDown({Key? key, required this.count}) : super(key: key);
+
+  @override
+  State<TeacherDropDown> createState() => _TeacherDropDown();
+}
+
+class _TeacherDropDown extends State<TeacherDropDown> {
+  
+
+  @override
+  Widget build(BuildContext context) {  
+    return Container(
+      margin: EdgeInsets.only(top: 5, bottom: 5),
+        width: 120,
+        padding: EdgeInsets.only(top: 1, bottom: 1,left: 1),
+        decoration: BoxDecoration(
+          //color: Colors.deepPurple,
+          // boxShadow: [
+          //   BoxShadow(color: Colors.white.withOpacity(0.4), blurRadius: 10)
+          // ],
+          border: Border.all(color: Colors.white),
+          borderRadius: BorderRadius.circular(12),
+        ),
+      child:  DropdownButton<String>(
+        value: Utilities.teacherdropdownvalue,
+          isExpanded: true,
+        icon:  Icon(Icons.arrow_drop_down),
+        //elevation: 40,
+        style:  TextStyle(color: Colors.deepPurple,fontSize:20),
+        underline: Container(
+          height: 2,
+          color: Colors.grey[300],
+        ),
+           onChanged: (String? newValue) {
+          setState(() {
+            Utilities.teacherdropdownvalue = newValue!;
+           // print(dropdownValue);
+           Utilities.selectedCourcesreport.add({
+              'count' : widget.count,
+              'type' : 'teacher',
+              'value' : newValue
+            });
+          }
+          );
+           },
+          items: Utilities.TeacherList.map((data) {
+              return DropdownMenuItem<String>(
+                value:data.name,
+                child: Text(
+                  data.name,
+                   style: TextStyle(color: Colors.deepPurpleAccent),
+                ),
+              );
+            }).toList(),
+        ),
+    );
+  }
+}
+
+//semesterdropdown
+
+class SemesterDropDown extends StatefulWidget {
+  int count;
+  SemesterDropDown({Key? key, required this.count}) : super(key: key);
+
+  @override
+  State<SemesterDropDown> createState() => _SemesterDropDown();
+}
+
+class _SemesterDropDown extends State<SemesterDropDown> {
+  
+
+  @override
+  Widget build(BuildContext context) {  
+    return Container(
+      margin: EdgeInsets.only(top: 5, bottom: 5),
+        width: 120,
+        padding: EdgeInsets.only(top: 1, bottom: 1,left: 1),
+        decoration: BoxDecoration(
+          //color: Colors.deepPurple,
+          // boxShadow: [
+          //   BoxShadow(color: Colors.white.withOpacity(0.4), blurRadius: 10)
+          // ],
+          border: Border.all(color: Colors.white),
+          borderRadius: BorderRadius.circular(12),
+        ),
+      child:  DropdownButton<String>(
+        value: Utilities.semesterdropdownvalue,
+          isExpanded: true,
+        icon:  Icon(Icons.arrow_drop_down),
+        //elevation: 40,
+        style:  TextStyle(color: Colors.deepPurple,fontSize:20),
+        underline: Container(
+          height: 2,
+          color: Colors.grey[300],
+        ),
+           onChanged: (String? newValue) {
+          setState(() {
+            Utilities.semesterdropdownvalue = newValue!;
+            Utilities.selectedCourcesreport.add({
+              'count' : widget.count,
+              'type' : 'semester',
+              'value' : newValue
+            });
+           // print(dropdownValue);
+          }
+          );
+           },
+          items: Utilities.SemesterList.map((data) {
+              return DropdownMenuItem<String>(
+                value:data.semesterNo,
+                child: Text(
+                  data.semesterNo,
+                   style: TextStyle(color: Colors.deepPurpleAccent),
+                ),
+              );
+            }).toList(),
+        ),
+    );
+  }
+}
+
 
 //mybackground
 
@@ -498,6 +692,49 @@ class MyTextfield extends StatelessWidget {
     );
   }
 }
+
+//BarChartGraph
+
+class SubscriberChart extends StatelessWidget {
+  final List<SubscriberSeries> data;
+
+ SubscriberChart({required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    List<charts.Series<SubscriberSeries, String>> series = [
+      charts.Series(
+        id: "Subscribers",
+        data: data,
+        domainFn: (SubscriberSeries series, _) => series.year,
+        measureFn: (SubscriberSeries series, _) => series.subscribers,
+        colorFn: (SubscriberSeries series, _) => series.barColor
+      )
+    ];
+
+    return Container(
+      height: 500,
+      padding: EdgeInsets.all(20),
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Column(
+            children: <Widget>[
+              // Text(
+              //   "World of Warcraft Subscribers by Year",
+              //   style: Theme.of(context).textTheme.bodyText1,
+              // ),
+              Expanded(
+                child: charts.BarChart(series, animate: true),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 
 // //RadioButton
 

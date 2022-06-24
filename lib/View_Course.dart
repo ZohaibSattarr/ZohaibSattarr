@@ -8,6 +8,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:teacherevaluation/controllers/widgets.dart';
+import 'package:teacherevaluation/evaluation.dart';
 import 'package:teacherevaluation/models/courses.dart';
 import 'package:http/http.dart' as http;
 import 'package:teacherevaluation/models/navbar.dart';
@@ -251,7 +252,7 @@ Widget buildList(BuildContext context, int index) {
                       ],
                     ),
                      Center(child: OutlinedButton.icon(onPressed: (){
-                       Navigator.pushNamed(context, '/teacher_evaluation');
+                       Navigator.push(context, MaterialPageRoute(builder: (context) => TeacherEvaluation(course: Utilities.courseslist[index])));
                        Utilities.teachername=Utilities.courseslist[index].empFirstname.toString()+" "+Utilities.courseslist[index].empLastname.toString();
                      }, icon: Icon(Icons.event_available_outlined), label: Text("Evaluate"))), 
                   ],

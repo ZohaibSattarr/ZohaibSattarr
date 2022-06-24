@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:teacherevaluation/Admin.dart';
+import 'package:teacherevaluation/controllers/DirectorController.dart';
 import 'package:teacherevaluation/controllers/Utilities.dart';
 import 'package:teacherevaluation/controllers/widgets.dart';
 import 'package:teacherevaluation/models/questionmodel.dart';
@@ -25,6 +26,7 @@ class UserLogin extends StatefulWidget {
 class _UserLoginState extends State<UserLogin> {
 var username = TextEditingController();
 var password = TextEditingController();
+DirectorController dir=DirectorController();
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +71,10 @@ var password = TextEditingController();
                SizedBox(
               height: 25,
             ),
-            MyButton(text: "Login",fontWeight: FontWeight.bold, onTap: () {
+            MyButton(text: "Login",fontWeight: FontWeight.bold, onTap: ()async {
               EasyLoading.show();
-              username.text="2018-arid-1146";
-              password.text="123";
+            //  username.text="Director";
+            //    password.text="123";
              if(Utilities.dropdownValue=='Student')
              {
               login(context);
@@ -81,6 +83,17 @@ var password = TextEditingController();
              else if(Utilities.dropdownValue=='Admin')
              {
                admin(context);
+             }
+             else if(Utilities.dropdownValue=='Director')
+             {
+               if(username.text=='Director'&& password.text=='123')
+               {
+                 await dir.getallcourses();
+                 await dir.getallsemester();
+                 await dir.getallteachers();
+                 EasyLoading.dismiss();
+                 Navigator.pushNamed(context,'/Report');
+               }
              }
             }),
             const SizedBox(
