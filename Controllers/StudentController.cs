@@ -113,15 +113,44 @@ namespace TeacherEvalutionV2.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        //[HttpPost]
+        //public HttpResponseMessage addStdEvaluation(Eval[] obj)
+        //{
+        //    try
+        //    {
+        //        foreach (Eval c in obj)
+        //        {
+        //            db.Evals.Add(c);
+        //        }
+
+        //        db.SaveChanges();
+        //        return Request.CreateResponse(HttpStatusCode.OK, "Submitted Successfully!");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
+        //    }
+        //}
+
         [Route("api/student/addStdEvaluation")]
         [HttpPost]
-        public HttpResponseMessage addStdEvaluation(Eval obj)
+        public HttpResponseMessage addStdEvaluation(string op1, string op2, string op3, string op4, string op5, int op6, string op7, int op8)
         {
             try
             {
-                db.Evals.Add(obj);
+                Eval qu = new Eval();
+                qu.Emp_no = op1;
+                qu.Reg_No = op2;
+                qu.Course_no = op3;
+                qu.Discipline = op4;
+                qu.Semester_no = op5;
+                qu.Question_Desc = op6;
+                qu.Answer_Desc = op7;
+                qu.Answer_Marks = op8;
+                db.Evals.Add(qu);
                 db.SaveChanges();
-                return Request.CreateResponse(HttpStatusCode.OK, "Submitted Successfully!");
+                return Request.CreateResponse(HttpStatusCode.OK, qu);
             }
             catch (Exception ex)
             {
