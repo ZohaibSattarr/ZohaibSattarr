@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart';
+import 'package:teacherevaluation/View_Course.dart';
 
 import 'package:teacherevaluation/controllers/widgets.dart';
 import 'package:teacherevaluation/models/courses.dart';
@@ -27,21 +28,12 @@ enum EvaluationAns {excellent, average,belowAverage,good,poor}
 class _TeacherEvaluationState extends State<TeacherEvaluation> {
     EvaluationAns? _value = EvaluationAns.excellent;
   //   Map<int,String> selectedValues= new Map<int,String>();
-  // @override
-  // void initState(){
-  //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-  //     for(int i=0;i<3;i++)
-  //     {
-  //       selectedValues.putIfAbsent(i,()=>""); 
-  //     }
-  //     setState(() {
-        
-  //     });
-  //   });
-  // }
-
   @override
+  void initState(){
+    // print("jdsjshdkjshslkansk"+Utilities.val.toString());
+    super.initState();
+  }
+
 
     final TextStyle dropdownmenuitem =
       TextStyle(color: Colors.black, fontSize: 19);
@@ -64,6 +56,7 @@ class _TeacherEvaluationState extends State<TeacherEvaluation> {
         Utilities.questionlist.add(Questionmodel.fromJson(i));
         options.add("0");
       }
+      print(Utilities.questionlist.length);
       
       return Utilities.questionlist;
       
@@ -75,9 +68,9 @@ class _TeacherEvaluationState extends State<TeacherEvaluation> {
   List<String> options = [];
 
   @override
-  void initState() {
-    super.initState();
-  }
+  // void initState() {
+  //   super.initState();
+  // }
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xfff0f0f0),
@@ -107,164 +100,164 @@ class _TeacherEvaluationState extends State<TeacherEvaluation> {
                           child: ListView.builder(
                               itemCount: Utilities.questionlist.length,
                               itemBuilder: (BuildContext context, int index) {
-                                //return buildList(context, index);
-                                return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        color: Colors.white,
-      ),
-      width: double.infinity,
-      //height: 400,
-      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      child: InkWell(
-        onTap: () {
-        },
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left:12.0,top: 10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      Utilities.questionlist[index].question1,
-                      style: TextStyle(
-                          color: primary,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18),
-                    ),
-                    SizedBox(
-                      height: 6,
-                    ),
-                    Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              options[index+1] = "Excellent";
-                              setState(() {
+                                return buildList(context, index);
+    //                             return Container(
+    //   decoration: BoxDecoration(
+    //     borderRadius: BorderRadius.circular(25),
+    //     color: Colors.white,
+    //   ),
+    //   width: double.infinity,
+    //   //height: 400,
+    //   margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+    //   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+    //   child: InkWell(
+    //     onTap: () {
+    //     },
+    //     child: Row(
+    //       crossAxisAlignment: CrossAxisAlignment.start,
+    //       children: <Widget>[
+    //         Expanded(
+    //           child: Padding(
+    //             padding: const EdgeInsets.only(left:12.0,top: 10.0),
+    //             child: Column(
+    //               crossAxisAlignment: CrossAxisAlignment.start,
+    //               children: <Widget>[
+    //                 Text(
+    //                   Utilities.questionlist[index].question1,
+    //                   style: TextStyle(
+    //                       color: primary,
+    //                       fontWeight: FontWeight.bold,
+    //                       fontSize: 18),
+    //                 ),
+    //                 SizedBox(
+    //                   height: 6,
+    //                 ),
+    //                 Container(
+    //                   child: Column(
+    //                     crossAxisAlignment: CrossAxisAlignment.center,
+    //                     children: [
+    //                       InkWell(
+    //                         onTap: () {
+    //                           options[index+1] = "Excellent";
+    //                           setState(() {
                                 
-                              });
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              decoration: BoxDecoration(
-                                color : options[index+1] != "Excellent" ? Colors.white : Colors.blue,
-                                border: Border.all(
-                                  color: Colors.blue
-                                )
-                              ),
-                              alignment: Alignment.center,
-                              child: Text('Excellent', style: TextStyle(
-                                color: options[index+1] != "Excellent" ? Colors.black : Colors.white,
-                              ),),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              options[index+1] = "Average";
-                              setState(() {
+    //                           });
+    //                         },
+    //                         child: Container(
+    //                           padding: const EdgeInsets.symmetric(vertical: 8),
+    //                           margin: const EdgeInsets.symmetric(vertical: 8),
+    //                           decoration: BoxDecoration(
+    //                             color : options[index+1] != "Excellent" ? Colors.white : Colors.blue,
+    //                             border: Border.all(
+    //                               color: Colors.blue
+    //                             )
+    //                           ),
+    //                           alignment: Alignment.center,
+    //                           child: Text('Excellent', style: TextStyle(
+    //                             color: options[index+1] != "Excellent" ? Colors.black : Colors.white,
+    //                           ),),
+    //                         ),
+    //                       ),
+    //                       InkWell(
+    //                         onTap: () {
+    //                           options[index+1] = "Average";
+    //                           setState(() {
                                 
-                              });
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              decoration: BoxDecoration(
-                                color : options[index+1] != "Average" ? Colors.white : Colors.blue,
-                                border: Border.all(
-                                  color: Colors.blue
-                                )
-                              ),
-                              alignment: Alignment.center,
-                              child: Text('Average', style: TextStyle(
-                                color: options[index+1] != "Average" ? Colors.black : Colors.white,
-                              ),),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              options[index+1] = "Below Average";
-                              setState(() {
+    //                           });
+    //                         },
+    //                         child: Container(
+    //                           padding: const EdgeInsets.symmetric(vertical: 8),
+    //                           margin: const EdgeInsets.symmetric(vertical: 8),
+    //                           decoration: BoxDecoration(
+    //                             color : options[index+1] != "Average" ? Colors.white : Colors.blue,
+    //                             border: Border.all(
+    //                               color: Colors.blue
+    //                             )
+    //                           ),
+    //                           alignment: Alignment.center,
+    //                           child: Text('Average', style: TextStyle(
+    //                             color: options[index+1] != "Average" ? Colors.black : Colors.white,
+    //                           ),),
+    //                         ),
+    //                       ),
+    //                       InkWell(
+    //                         onTap: () {
+    //                           options[index+1] = "Below Average";
+    //                           setState(() {
                                 
-                              });
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              decoration: BoxDecoration(
-                                color : options[index+1] != "Below Average" ? Colors.white : Colors.blue,
-                                border: Border.all(
-                                  color: Colors.blue
-                                )
-                              ),
-                              alignment: Alignment.center,
-                              child: Text('Below Average', style: TextStyle(
-                                color: options[index+1] != "Below Average" ? Colors.black : Colors.white,
-                              ),),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              options[index+1] = "Good";
-                              setState(() {
+    //                           });
+    //                         },
+    //                         child: Container(
+    //                           padding: const EdgeInsets.symmetric(vertical: 8),
+    //                           margin: const EdgeInsets.symmetric(vertical: 8),
+    //                           decoration: BoxDecoration(
+    //                             color : options[index+1] != "Below Average" ? Colors.white : Colors.blue,
+    //                             border: Border.all(
+    //                               color: Colors.blue
+    //                             )
+    //                           ),
+    //                           alignment: Alignment.center,
+    //                           child: Text('Below Average', style: TextStyle(
+    //                             color: options[index+1] != "Below Average" ? Colors.black : Colors.white,
+    //                           ),),
+    //                         ),
+    //                       ),
+    //                       InkWell(
+    //                         onTap: () {
+    //                           options[index+1] = "Good";
+    //                           setState(() {
                                 
-                              });
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              decoration: BoxDecoration(
-                                color : options[index+1] != "Good" ? Colors.white : Colors.blue,
-                                border: Border.all(
-                                  color: Colors.blue
-                                )
-                              ),
-                              alignment: Alignment.center,
-                              child: Text('Good', style: TextStyle(
-                                color: options[index+1] != "Good" ? Colors.black : Colors.white,
-                              ),),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              options[index+1] = "Poor";
-                              setState(() {
+    //                           });
+    //                         },
+    //                         child: Container(
+    //                           padding: const EdgeInsets.symmetric(vertical: 8),
+    //                           margin: const EdgeInsets.symmetric(vertical: 8),
+    //                           decoration: BoxDecoration(
+    //                             color : options[index+1] != "Good" ? Colors.white : Colors.blue,
+    //                             border: Border.all(
+    //                               color: Colors.blue
+    //                             )
+    //                           ),
+    //                           alignment: Alignment.center,
+    //                           child: Text('Good', style: TextStyle(
+    //                             color: options[index+1] != "Good" ? Colors.black : Colors.white,
+    //                           ),),
+    //                         ),
+    //                       ),
+    //                       InkWell(
+    //                         onTap: () {
+    //                           options[index+1] = "Poor";
+    //                           setState(() {
                                 
-                              });
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              decoration: BoxDecoration(
-                                color : options[index+1] != "Poor" ? Colors.white : Colors.blue,
-                                border: Border.all(
-                                  color: Colors.blue
-                                )
-                              ),
-                              alignment: Alignment.center,
-                              child: Text('Poor', style: TextStyle(
-                                color: options[index+1] != "Poor" ? Colors.black : Colors.white,
-                              ),),
-                            ),
-                          )
-                        ],
-                      ),
-                    )
+    //                           });
+    //                         },
+    //                         child: Container(
+    //                           padding: const EdgeInsets.symmetric(vertical: 8),
+    //                           margin: const EdgeInsets.symmetric(vertical: 8),
+    //                           decoration: BoxDecoration(
+    //                             color : options[index+1] != "Poor" ? Colors.white : Colors.blue,
+    //                             border: Border.all(
+    //                               color: Colors.blue
+    //                             )
+    //                           ),
+    //                           alignment: Alignment.center,
+    //                           child: Text('Poor', style: TextStyle(
+    //                             color: options[index+1] != "Poor" ? Colors.black : Colors.white,
+    //                           ),),
+    //                         ),
+    //                       )
+    //                     ],
+    //                   ),
+    //                 )
        
-                ],
-               ),
-              ), 
-            )
-          ],
-        ),  
-      ),
-    );
+    //             ],
+    //            ),
+    //           ), 
+    //         )
+    //       ],
+    //     ),  
+    //   ),
+    // );
                               }),
                         ),
                         Container(
@@ -347,7 +340,6 @@ class _TeacherEvaluationState extends State<TeacherEvaluation> {
                                       style: TextStyle(
                                            color: Colors.white, fontSize: 24),),
                                    ),
-                                  
                                   // IconButton(
                                   //   onPressed: () {},
                                   //   icon: Icon(
@@ -367,8 +359,9 @@ class _TeacherEvaluationState extends State<TeacherEvaluation> {
                                 height: 724,
                               ),
                               MyButton(text: "Save",fontWeight: FontWeight.bold, onTap: () async {
+
                                 EasyLoading.show();
-                                int j=1;
+                                int j=0;
                                 try{
                                   //String url = Utilities.baseurl + "/TeacherEvalutionV2/api/student/addStdEvaluation?op1="+widget.course.emp_no.toString()+"&op2="+Utilities.regno.toString()+"&op3="+widget.course.courseNo.toString()+"&op4="+Utilities.navbarlist[0].discipline.toString()+"&op5="+Utilities.semester+"&op6="+j.toString()+"&op7=good"+"&op8=5"+"";
                                     for(;j<=15;j++)
@@ -396,13 +389,16 @@ class _TeacherEvaluationState extends State<TeacherEvaluation> {
                                   //  print(response.data);
                                   if(response.statusCode == 200){
                                       print("Done..........");
+                                      if(Utilities.val==1){
+                                      Utilities.flag1=true;
+                                      }
                                   }
                                     }
                                     
                                       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Center(child: Text("${Utilities.teachername.toString()} Evaluated Successfully!",textAlign: TextAlign.center, style: TextStyle(fontSize: 16.0, fontWeight: 
      FontWeight.bold),)),duration: Duration(seconds: 3),backgroundColor: Colors.green,));
-                                    Navigator.pop(context);
+                                     Navigator.push(context, MaterialPageRoute(builder: (context) => ViewCourses()));
                                     EasyLoading.dismiss();
                                   
 
@@ -443,14 +439,14 @@ class _TeacherEvaluationState extends State<TeacherEvaluation> {
     );
   }
 
-Widget buildList(BuildContext context, int index) {
-    return Container(
+ Widget buildList(BuildContext context, int index) {
+   return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
         color: Colors.white,
       ),
       width: double.infinity,
-      height: 400,
+      //height: 400,
       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: InkWell(
@@ -475,106 +471,124 @@ Widget buildList(BuildContext context, int index) {
                     SizedBox(
                       height: 6,
                     ),
-                    CustomRadioButton(
-                             buttonLables: [
-                                    "Excellent",
-                                    "Average",
-                                    "Below Average",
-                                    "Good",
-                                    "Poor",
-                                     ],
-                             buttonValues: [
-                                    "Excellent",
-                                    "Average",
-                                    "Below Average",
-                                    "Good",
-                                    "Poor",
-                                     ],
-                             radioButtonValue: (value) {
-                               
-                             },
-                             horizontal: true,
-                             selectedColor: Theme.of(context).colorScheme.secondary, unSelectedColor: Colors.white,
-    ),
-        // ListTile(  
-        //   title: const Text('Excellent'),  
-        //   leading: Radio<EvaluationAns>(  
-        //     value: EvaluationAns.excellent,  
-        //     groupValue: _value, 
-        //     onChanged: (EvaluationAns? value) {
-        //       setState(() {
-        //         _value=value;
-        //         Utilities.radiovalue=value.toString();
-                
-        //       });
-        //       },   
-        //   ),  
-        // ),  
-        // ListTile(  
-        //   title: const Text('Average'),  
-        //   leading: Radio<EvaluationAns>(  
-        //     value: EvaluationAns.average,  
-        //     groupValue: _value, 
-        //     onChanged: (EvaluationAns? value) {
-        //       setState(() {
-        //         _value=value;
-        //         Utilities.radiovalue=value.toString();
-                
-        //       });
-        //       },   
-        //   ),  
-        // ),   
-        // ListTile(  
-        //   title: const Text('Below Average'),  
-        //   leading: Radio<EvaluationAns>(  
-        //     value: EvaluationAns.belowAverage,  
-        //     groupValue: _value, 
-        //     onChanged: (EvaluationAns? value) {
-        //       setState(() {
-        //         _value=value;
-        //         Utilities.radiovalue=value.toString();
-                
-        //       });
-        //       },   
-        //   ),  
-        // ),  
-        // ListTile(  
-        //   title: const Text('Good'),  
-        //   leading: Radio<EvaluationAns>(  
-        //     value: EvaluationAns.good,  
-        //     groupValue: _value, 
-        //     onChanged: (EvaluationAns? value) {
-        //       setState(() {
-        //         _value=value;
-        //         Utilities.radiovalue=value.toString();
-                
-        //       });
-        //       },   
-        //   ),  
-        // ), 
-        // ListTile(  
-        //   title: const Text('Poor'),  
-        //   leading: Radio<EvaluationAns>(  
-        //     value: EvaluationAns.poor,  
-        //     groupValue: _value, 
-        //     onChanged: (EvaluationAns? value) {
-        //       setState(() {
-        //         _value=value;
-        //         Utilities.radiovalue=value.toString();
-        //         // for(int i=0;i<Utilities.questionlist.length;i++)
-        //         // {
-        //         //   Utilities.post.add({"Emp_no:"+Utilities.courseslist[index].emp_no,"Reg_No:"+Utilities.regno,
-        //         //   "Course_no:"+Utilities.courseslist[index].courseNo,"Discipline:BCS","Semester_No:"
-        //         //   +Utilities.semester,"Question_Desc:"+Utilities.questionlist[i].questionId.toString(),
-        //         //   "Answer_Desc:Poor","Answer_Marks:1"}
-        //         //   );
-        //         // }
-        //         // print(Utilities.post.toList());
-                
-        //       });
-        //       },   
-        //   ),  
-        // ),  
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              options[index] = "Excellent";
+                              setState(() {
+                                
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              margin: const EdgeInsets.symmetric(vertical: 8),
+                              decoration: BoxDecoration(
+                                color : options[index] != "Excellent" ? Colors.white : Colors.blue,
+                                border: Border.all(
+                                  color: Colors.blue
+                                )
+                              ),
+                              alignment: Alignment.center,
+                              child: Text('Excellent', style: TextStyle(
+                                color: options[index] != "Excellent" ? Colors.black : Colors.white,
+                              ),),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              options[index] = "Average";
+                              setState(() {
+                                
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              margin: const EdgeInsets.symmetric(vertical: 8),
+                              decoration: BoxDecoration(
+                                color : options[index] != "Average" ? Colors.white : Colors.blue,
+                                border: Border.all(
+                                  color: Colors.blue
+                                )
+                              ),
+                              alignment: Alignment.center,
+                              child: Text('Average', style: TextStyle(
+                                color: options[index] != "Average" ? Colors.black : Colors.white,
+                              ),),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              options[index] = "Below Average";
+                              setState(() {
+                                
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              margin: const EdgeInsets.symmetric(vertical: 8),
+                              decoration: BoxDecoration(
+                                color : options[index] != "Below Average" ? Colors.white : Colors.blue,
+                                border: Border.all(
+                                  color: Colors.blue
+                                )
+                              ),
+                              alignment: Alignment.center,
+                              child: Text('Below Average', style: TextStyle(
+                                color: options[index] != "Below Average" ? Colors.black : Colors.white,
+                              ),),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              options[index] = "Good";
+                              setState(() {
+                                
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              margin: const EdgeInsets.symmetric(vertical: 8),
+                              decoration: BoxDecoration(
+                                color : options[index] != "Good" ? Colors.white : Colors.blue,
+                                border: Border.all(
+                                  color: Colors.blue
+                                )
+                              ),
+                              alignment: Alignment.center,
+                              child: Text('Good', style: TextStyle(
+                                color: options[index] != "Good" ? Colors.black : Colors.white,
+                              ),),
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              options[index] = "Poor";
+                              setState(() {
+                                
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 8),
+                              margin: const EdgeInsets.symmetric(vertical: 8),
+                              decoration: BoxDecoration(
+                                color : options[index] != "Poor" ? Colors.white : Colors.blue,
+                                border: Border.all(
+                                  color: Colors.blue
+                                )
+                              ),
+                              alignment: Alignment.center,
+                              child: Text('Poor', style: TextStyle(
+                                color: options[index] != "Poor" ? Colors.black : Colors.white,
+                              ),),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+       
                 ],
                ),
               ), 
@@ -582,8 +596,147 @@ Widget buildList(BuildContext context, int index) {
           ],
         ),  
       ),
-    ); 
-  }
+    );
+//     return Container(
+//       decoration: BoxDecoration(
+//         borderRadius: BorderRadius.circular(25),
+//         color: Colors.white,
+//       ),
+//       width: double.infinity,
+//       height: 400,
+//       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+//       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+//       child: InkWell(
+//         onTap: () {
+//         },
+//         child: Row(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: <Widget>[
+//             Expanded(
+//               child: Padding(
+//                 padding: const EdgeInsets.only(left:12.0,top: 10.0),
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: <Widget>[
+//                     Text(
+//                       Utilities.questionlist[index].question1,
+//                       style: TextStyle(
+//                           color: primary,
+//                           fontWeight: FontWeight.bold,
+//                           fontSize: 18),
+//                     ),
+//                     SizedBox(
+//                       height: 6,
+//                     ),
+//                     CustomRadioButton(
+//                              buttonLables: [
+//                                     "Excellent",
+//                                     "Average",
+//                                     "Below Average",
+//                                     "Good",
+//                                     "Poor",
+//                                      ],
+//                              buttonValues: [
+//                                     "Excellent",
+//                                     "Average",
+//                                     "Below Average",
+//                                     "Good",
+//                                     "Poor",
+//                                      ],
+//                              radioButtonValue: (value) {
+                               
+//                              },
+//                              horizontal: true,
+//                              selectedColor: Theme.of(context).colorScheme.secondary, unSelectedColor: Colors.white,
+//     ),
+//         // ListTile(  
+//         //   title: const Text('Excellent'),  
+//         //   leading: Radio<EvaluationAns>(  
+//         //     value: EvaluationAns.excellent,  
+//         //     groupValue: _value, 
+//         //     onChanged: (EvaluationAns? value) {
+//         //       setState(() {
+//         //         _value=value;
+//         //         Utilities.radiovalue=value.toString();
+                
+//         //       });
+//         //       },   
+//         //   ),  
+//         // ),  
+//         // ListTile(  
+//         //   title: const Text('Average'),  
+//         //   leading: Radio<EvaluationAns>(  
+//         //     value: EvaluationAns.average,  
+//         //     groupValue: _value, 
+//         //     onChanged: (EvaluationAns? value) {
+//         //       setState(() {
+//         //         _value=value;
+//         //         Utilities.radiovalue=value.toString();
+                
+//         //       });
+//         //       },   
+//         //   ),  
+//         // ),   
+//         // ListTile(  
+//         //   title: const Text('Below Average'),  
+//         //   leading: Radio<EvaluationAns>(  
+//         //     value: EvaluationAns.belowAverage,  
+//         //     groupValue: _value, 
+//         //     onChanged: (EvaluationAns? value) {
+//         //       setState(() {
+//         //         _value=value;
+//         //         Utilities.radiovalue=value.toString();
+                
+//         //       });
+//         //       },   
+//         //   ),  
+//         // ),  
+//         // ListTile(  
+//         //   title: const Text('Good'),  
+//         //   leading: Radio<EvaluationAns>(  
+//         //     value: EvaluationAns.good,  
+//         //     groupValue: _value, 
+//         //     onChanged: (EvaluationAns? value) {
+//         //       setState(() {
+//         //         _value=value;
+//         //         Utilities.radiovalue=value.toString();
+                
+//         //       });
+//         //       },   
+//         //   ),  
+//         // ), 
+//         // ListTile(  
+//         //   title: const Text('Poor'),  
+//         //   leading: Radio<EvaluationAns>(  
+//         //     value: EvaluationAns.poor,  
+//         //     groupValue: _value, 
+//         //     onChanged: (EvaluationAns? value) {
+//         //       setState(() {
+//         //         _value=value;
+//         //         Utilities.radiovalue=value.toString();
+//         //         // for(int i=0;i<Utilities.questionlist.length;i++)
+//         //         // {
+//         //         //   Utilities.post.add({"Emp_no:"+Utilities.courseslist[index].emp_no,"Reg_No:"+Utilities.regno,
+//         //         //   "Course_no:"+Utilities.courseslist[index].courseNo,"Discipline:BCS","Semester_No:"
+//         //         //   +Utilities.semester,"Question_Desc:"+Utilities.questionlist[i].questionId.toString(),
+//         //         //   "Answer_Desc:Poor","Answer_Marks:1"}
+//         //         //   );
+//         //         // }
+//         //         // print(Utilities.post.toList());
+                
+//         //       });
+//         //       },   
+//         //   ),  
+//         // ),  
+//                 ],
+//                ),
+//               ), 
+//             )
+//           ],
+//         ),  
+//       ),
+//     ); 
+//   }
 //   evalpost() async {
 //     int totalevaluatedquestion=Utilities.questionlist.length;
 //     int saved=0;
@@ -627,7 +780,7 @@ Widget buildList(BuildContext context, int index) {
 //     }}
 // }
 
+   }
 }
-
 
 

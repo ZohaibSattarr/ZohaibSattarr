@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
 import 'package:teacherevaluation/Admin.dart';
+import 'package:teacherevaluation/Report.dart';
+import 'package:teacherevaluation/Task.dart';
 import 'package:teacherevaluation/controllers/DirectorController.dart';
 import 'package:teacherevaluation/controllers/Utilities.dart';
 import 'package:teacherevaluation/controllers/widgets.dart';
@@ -42,14 +44,6 @@ DirectorController dir=DirectorController();
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // InkWell(
-            //     onTap: () {
-            //       Navigator.pop(context);
-            //     },
-            //     child: const Icon(
-            //       Icons.arrow_back,
-            //       color: Colors.blue,
-            //     )),
             Center(
                 child: Container(
               decoration: BoxDecoration(
@@ -73,8 +67,6 @@ DirectorController dir=DirectorController();
             ),
             MyButton(text: "Login",fontWeight: FontWeight.bold, onTap: ()async {
               EasyLoading.show();
-            //  username.text="Director";
-            //    password.text="123";
              if(Utilities.dropdownValue=='Student')
              {
               login(context);
@@ -88,11 +80,9 @@ DirectorController dir=DirectorController();
              {
                if(username.text=='Director'&& password.text=='123')
                {
-                 await dir.getallcourses();
-                 await dir.getallsemester();
-                 await dir.getallteachers();
-                 EasyLoading.dismiss();
+                await dir.gettemplate();
                  Navigator.pushNamed(context,'/Report');
+                 EasyLoading.dismiss();
                }
              }
             }),
@@ -107,6 +97,8 @@ DirectorController dir=DirectorController();
   }
 
   Future<void> login(context) async {
+    username.text="2018-Arid-1128";
+    password.text="123";
        var request = await http.get(Uri.parse(Utilities.baseurl+"/TeacherEvalutionV2/api/student/login/" +username.text  +"/"+password.text ));
     
     print('sending request...');
@@ -133,12 +125,12 @@ DirectorController dir=DirectorController();
     print('sending request...');
 
     if (request.statusCode == 200) {
-     getallquestions(context);
+    //  getallquestions(context);
       print('OK Call');
       EasyLoading.dismiss();
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Admin Login Successfull!"),backgroundColor: Colors.green,));
-      Navigator.pushNamed(context, '/View_Course');
+      Navigator.pushNamed(context, '/Task');
     } else {
       print('Not Uploaded');
       EasyLoading.dismiss();
@@ -149,24 +141,24 @@ DirectorController dir=DirectorController();
 
 
  
-  Future<List<Questionmodel>> getallquestions(BuildContext context) async {
-    final response = await http.get(
-        Uri.parse(Utilities.baseurl+'/TeacherEvalutionV2/api/student/GetQuestions'));
-    var data = jsonDecode(response.body.toString());
-    if (response.statusCode == 200) {
-      Utilities.questionlist.clear();
-      for (Map<String, dynamic> i in data) {
-        Utilities.questionlist.add(Questionmodel.fromJson(i));
-      }
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckBoxInListView()));
-      EasyLoading.dismiss();
-      return Utilities.questionlist;
+  // Future<List<Questionmodel>> getallquestions(BuildContext context) async {
+  //   final response = await http.get(
+  //       Uri.parse(Utilities.baseurl+'/TeacherEvalutionV2/api/student/GetQuestions'));
+  //   var data = jsonDecode(response.body.toString());
+  //   if (response.statusCode == 200) {
+  //     Utilities.questionlist.clear();
+  //     for (Map<String, dynamic> i in data) {
+  //       Utilities.questionlist.add(Questionmodel.fromJson(i));
+  //     }
+  //     Navigator.push(context, MaterialPageRoute(builder: (context)=>CheckBoxInListView()));
+  //     EasyLoading.dismiss();
+  //     return Utilities.questionlist;
       
-    } else {
-      EasyLoading.dismiss();
-      return Utilities.questionlist;
-    }
-  }
+  //   } else {
+  //     EasyLoading.dismiss();
+  //     return Utilities.questionlist;
+  //   }
+  // }
   Future<List<Navbarmodel>> navbarcall() async {
     final response = await http.get(
         Uri.parse(Utilities.baseurl + '/TeacherEvalutionV2/api/student/NavBar/'+username.text+'/2021FM'));

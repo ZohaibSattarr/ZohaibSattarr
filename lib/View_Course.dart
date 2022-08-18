@@ -192,7 +192,7 @@ Widget buildList(BuildContext context, int index) {
         color: Colors.white,
       ),
       width: double.infinity,
-      height: 150,
+      height: 170,
       margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: InkWell(
@@ -254,7 +254,7 @@ Widget buildList(BuildContext context, int index) {
                      Center(child: OutlinedButton.icon(onPressed: (){
                        Navigator.push(context, MaterialPageRoute(builder: (context) => TeacherEvaluation(course: Utilities.courseslist[index])));
                        Utilities.teachername=Utilities.courseslist[index].empFirstname.toString()+" "+Utilities.courseslist[index].empLastname.toString();
-                     }, icon: Icon(Icons.event_available_outlined), label: Text("Evaluate"))), 
+                     }, icon: Icon(Icons.event_available_outlined), label:Utilities.flag1==true? Text("Evaluated"):Text("Evaluate"))), 
                   ],
                 ),
               ),

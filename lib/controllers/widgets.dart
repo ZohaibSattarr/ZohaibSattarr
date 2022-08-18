@@ -343,6 +343,63 @@ class _TeacherDropDown extends State<TeacherDropDown> {
     );
   }
 }
+//TemplateDropDown
+class TemplateDropDown extends StatefulWidget {
+  TemplateDropDown({Key? key}) : super(key: key);
+
+  @override
+  State<TemplateDropDown> createState() => _TemplateDropDown();
+}
+
+class _TemplateDropDown extends State<TemplateDropDown> {
+  
+
+  @override
+  Widget build(BuildContext context) {  
+    return Container(
+      margin: EdgeInsets.only(top: 5, bottom: 5),
+        width: 120,
+        padding: EdgeInsets.only(top: 1, bottom: 1,left: 1),
+        decoration: BoxDecoration(
+          //color: Colors.deepPurple,
+          // boxShadow: [
+          //   BoxShadow(color: Colors.white.withOpacity(0.4), blurRadius: 10)
+          // ],
+          border: Border.all(color: Colors.white),
+          borderRadius: BorderRadius.circular(12),
+        ),
+      child:  DropdownButton<String>(
+        value: Utilities.templatedropdownvalue,
+          isExpanded: true,
+        icon:  Icon(Icons.arrow_drop_down),
+        //elevation: 40,
+        style:  TextStyle(color: Colors.deepPurple,fontSize:20),
+        underline: Container(
+          height: 2,
+          color: Colors.grey[300],
+        ),
+           onChanged: (String? newValue) {
+          setState(() {
+            Utilities.templatedropdownvalue = newValue!;
+           // print(dropdownValue);
+          }
+          );
+           },
+          items: Utilities.TemplateList.map((data) {
+              return DropdownMenuItem<String>(
+                value:data.Template_name,
+                child: Text(
+                  data.Template_name,
+                   style: TextStyle(color: Colors.deepPurpleAccent),
+                ),
+              );
+            }).toList(),
+        ),
+    );
+  }
+}
+
+
 
 //semesterdropdown
 
@@ -695,29 +752,30 @@ class MyTextfield extends StatelessWidget {
 
 //BarChartGraph
 
-class SubscriberChart extends StatelessWidget {
-  final List<SubscriberSeries> data;
+class ReportChart extends StatelessWidget {
+  final List<ReportSeries> data;
 
- SubscriberChart({required this.data});
+ ReportChart({required this.data});
 
   @override
   Widget build(BuildContext context) {
-    List<charts.Series<SubscriberSeries, String>> series = [
+    List<charts.Series<ReportSeries, String>> series = [
       charts.Series(
-        id: "Subscribers",
+        id: "Report",
         data: data,
-        domainFn: (SubscriberSeries series, _) => series.year,
-        measureFn: (SubscriberSeries series, _) => series.subscribers,
-        colorFn: (SubscriberSeries series, _) => series.barColor
+        domainFn: (ReportSeries series, _) => series.questionDesc.toString(),
+        measureFn: (ReportSeries series, _) => series.averageMarks,
+        colorFn: (ReportSeries series, _) => series.barColor
       )
     ];
 
     return Container(
       height: 500,
-      padding: EdgeInsets.all(20),
+      width: Utilities.getSize(context).width*1.6,
+      padding: EdgeInsets.all(1),
       child: Card(
         child: Padding(
-          padding: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.all(1.0),
           child: Column(
             children: <Widget>[
               // Text(
@@ -725,7 +783,10 @@ class SubscriberChart extends StatelessWidget {
               //   style: Theme.of(context).textTheme.bodyText1,
               // ),
               Expanded(
-                child: charts.BarChart(series, animate: true),
+                child: charts.BarChart(
+                  series, 
+                barGroupingType: charts.BarGroupingType.grouped,
+                animate: true),
               )
             ],
           ),

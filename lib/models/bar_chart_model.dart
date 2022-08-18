@@ -1,15 +1,17 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 
-class SubscriberSeries {
-  final String year;
-  final int subscribers;
+class ReportSeries {
+  final int questionDesc;
+  final double averageMarks;
   final charts.Color barColor;
 
-  SubscriberSeries(
+  ReportSeries(
     {
-      required this.year,
-      required this.subscribers,
+      required this.questionDesc,
+      required this.averageMarks,
       required this.barColor
     }
   );
+
+  void add(ReportSeries reportSeries) {}
 }

@@ -10,6 +10,8 @@ import 'package:teacherevaluation/evaluation.dart';
 import 'login.dart';
 import 'View_Course.dart';
 import 'Report.dart';
+import 'Task.dart';
+import 'Template.dart';
 
 void main() {
   // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +25,8 @@ void main() {
       '/View_Course':(context) =>ViewCourses(),
       //'/teacher_evaluation':(context) =>TeacherEvaluation(),
       '/Report': (context) => Report(),
+      '/Task':(context) => ReportTask(),
+      '/Template':(context) => TemplateTask(),
     },
   ));
   // FlutterNativeSplash.remove();
