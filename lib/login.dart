@@ -81,7 +81,7 @@ DirectorController dir=DirectorController();
                if(username.text=='Director'&& password.text=='123')
                {
                 await dir.gettemplate();
-                 Navigator.pushNamed(context,'/Report');
+                 Navigator.pushNamed(context,'/Template');
                  EasyLoading.dismiss();
                }
              }
@@ -97,8 +97,7 @@ DirectorController dir=DirectorController();
   }
 
   Future<void> login(context) async {
-    username.text="2018-Arid-1128";
-    password.text="123";
+    
        var request = await http.get(Uri.parse(Utilities.baseurl+"/TeacherEvalutionV2/api/student/login/" +username.text  +"/"+password.text ));
     
     print('sending request...');

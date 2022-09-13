@@ -19,7 +19,7 @@ class Utilities {
   // List<dynamic> data=[];
 
   }
-    static var baseurl="http://192.168.1.3";
+    static var baseurl="http://192.168.1.6";
     static String dropdownValue = 'Student';
     static String semesterdropdownvalue = '2022SM';
     static String templatedropdownvalue = 'Amir_we';
@@ -43,12 +43,22 @@ class Utilities {
     static List<SemesterModel> SemesterList=[];
     static List<CourseModel> CourseList=[];
     static List<TeacherModel> TeacherList=[];
-    static List<Templatemodel> TemplateList=[];
+    static List<TemplateModel> TemplateList=[];
     static List<dynamic> averagelist=[];
     // static List<dynamic> questionlist= [];
     static String teachername="";
     static String regno="";
     static int reportSelectorCounter = 1;
+    static String t1="Amir";
+    static String t2="Amir";
+    static String t3="Amir";
+     static String s1="2018SM";
+    static String s2="2018SM";
+    static String s3="2018SM";
+     static String c1="2018SM";
+    static String c2="2018SM";
+    static String c3="2018SM";
+    
     static List<Map<String, dynamic>> selectedCourcesreport = [
       
     ];

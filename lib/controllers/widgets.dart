@@ -200,7 +200,19 @@ class _SemesterdropDown extends State<SemesterdropDown> {
         ),
         onChanged: (String? newValue) {
           setState(() {
-            Utilities.semestervalue = newValue!;
+            if(Utilities.reportSelectorCounter==1)
+            {
+              Utilities.s1=newValue!;
+            }
+            else if(Utilities.reportSelectorCounter==2)
+            {
+              Utilities.s2=newValue!;
+            }
+            else
+            {
+              Utilities.s3=newValue!;
+            }
+            Utilities.semestervalue = newValue;
            // print(dropdownValue);
           }
           );
@@ -257,7 +269,19 @@ class _CourseDropDown extends State<CourseDropDown> {
         ),
            onChanged: (String? newValue) {
           setState(() {
-            Utilities.coursedropdownvalue = newValue!;
+              if(Utilities.reportSelectorCounter==1)
+            {
+              Utilities.c1=newValue!;
+            }
+            else if(Utilities.reportSelectorCounter==2)
+            {
+              Utilities.c2=newValue!;
+            }
+            else
+            {
+              Utilities.c3=newValue!;
+            }
+            Utilities.coursedropdownvalue = newValue;
            // print(dropdownValue);
            Utilities.selectedCourcesreport.add({
               'count' : widget.count,
@@ -320,7 +344,19 @@ class _TeacherDropDown extends State<TeacherDropDown> {
         ),
            onChanged: (String? newValue) {
           setState(() {
-            Utilities.teacherdropdownvalue = newValue!;
+             if(Utilities.reportSelectorCounter==1)
+            {
+              Utilities.t1=newValue!;
+            }
+            else if(Utilities.reportSelectorCounter==2)
+            {
+              Utilities.t2=newValue!;
+            }
+            else
+            {
+              Utilities.t3=newValue!;
+            }
+            Utilities.teacherdropdownvalue = newValue;
            // print(dropdownValue);
            Utilities.selectedCourcesreport.add({
               'count' : widget.count,
@@ -387,9 +423,9 @@ class _TemplateDropDown extends State<TemplateDropDown> {
            },
           items: Utilities.TemplateList.map((data) {
               return DropdownMenuItem<String>(
-                value:data.Template_name,
+                value:data.templatename,
                 child: Text(
-                  data.Template_name,
+                  data.templatename,
                    style: TextStyle(color: Colors.deepPurpleAccent),
                 ),
               );

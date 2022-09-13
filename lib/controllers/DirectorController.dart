@@ -108,7 +108,7 @@ class DirectorController
                        return response.data;
   }
 
-    Future<List<Templatemodel>> gettemplate() async {
+    Future<List<TemplateModel>> gettemplate() async {
     final response = await http.get(
         Uri.parse(Utilities.baseurl+'/TeacherEvalutionV2/api/admin/GetTemplate'));
     var data = jsonDecode(response.body.toString());
@@ -116,7 +116,7 @@ class DirectorController
 
       Utilities.TemplateList.clear();
       for (Map<String, dynamic> i in data) {
-        Utilities.TemplateList.add(Templatemodel.fromJson(i));
+        Utilities.TemplateList.add(TemplateModel.fromJson(i));
       }
       print(Utilities.TemplateList.length);
       
