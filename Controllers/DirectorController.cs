@@ -8,12 +8,15 @@ using TeacherEvalutionV2.DB;
 using TeacherEvalutionV2;
 using System.Data.SqlClient;
 using System.Data;
+using System.Web.Http.Cors;
 
 namespace TeacherEvalutionV2.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*", exposedHeaders: "X-Custom-Header")]
     public class DirectorController : ApiController
     {
-        BiitDBNewEntities4 db = new BiitDBNewEntities4();
+       
+        BiitDBNewEntities13 db = new BiitDBNewEntities13();
 
         [HttpPost]
         [Route("api/Director/getAverage1")]
@@ -22,6 +25,7 @@ namespace TeacherEvalutionV2.Controllers
             try
             {
                 List<dynamic> lst = new List<dynamic>();
+               
                 foreach (var item in eval)
                 {
                     var employees = db.Evals.Where(w => w.Emp_no == item.Emp_no && w.Course_no == item.Course_no && w.Semester_no == item.Semester_no)
@@ -65,8 +69,8 @@ namespace TeacherEvalutionV2.Controllers
         {
             try
             {
-                var res = db.Evals.Where(w => w.Emp_no == "BIIT361" && w.Course_no == "CS-497" && w.Semester_no == "2021FM");
-                var employees = db.Evals.Where(w => w.Emp_no == "BIIT361" && w.Course_no == "CS-497" && w.Semester_no == "2021FM")
+                var res = db.Evals.Where(w => w.Emp_no == "BIIT179" && w.Course_no == "CS-542" && w.Semester_no == "2015FM");
+                var employees = db.Evals.Where(w => w.Emp_no == "BIIT179" && w.Course_no == "CS-542" && w.Semester_no == "2015FM")
                     .Select(x => new
                     {
                         x.Emp_no,

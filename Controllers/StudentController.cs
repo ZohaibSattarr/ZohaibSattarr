@@ -13,17 +13,17 @@ namespace TeacherEvalutionV2.Controllers
 {
     public class StudentController : ApiController
     {
-        bool isAdmin = false;
-        BiitDBNewEntities4 db = new BiitDBNewEntities4();
+        //bool isAdmin = false;
+        BiitDBNewEntities13 db = new BiitDBNewEntities13();
 
         
         [Route("api/student/login/{userName}/{password}")]
         [HttpGet]
-        public HttpResponseMessage login(string userName, int password)
+        public HttpResponseMessage login(string userName, string Password)
         {
             try
             {
-                var Userfound = db.STMTRs.FirstOrDefault(s => s.Reg_No == userName && s.PASSWORD == password);
+                var Userfound = db.STMTRs.FirstOrDefault(s => s.Reg_No == userName && s.password == Password);
                 if (Userfound == null)
                     return Request.CreateResponse(HttpStatusCode.NotFound, "incorrect Creddiatenals");
 
