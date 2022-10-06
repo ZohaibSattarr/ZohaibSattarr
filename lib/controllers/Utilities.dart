@@ -7,6 +7,7 @@ import 'package:teacherevaluation/models/Teachermodel.dart';
 import 'package:teacherevaluation/models/TemplateModel.dart';
 import 'package:teacherevaluation/models/averagemodel.dart';
 
+import '../models/Performancemodel.dart';
 import '../models/courses.dart';
 import '../models/navbar.dart';
 import '../models/questionmodel.dart';
@@ -19,18 +20,20 @@ class Utilities {
   // List<dynamic> data=[];
 
   }
-    static var baseurl="http://192.168.1.6";
+    static var baseurl="http://192.168.246.207";
     static String dropdownValue = 'Student';
     static String semesterdropdownvalue = '2022SM';
-    static String templatedropdownvalue = 'Amir_we';
-    static String coursedropdownvalue = 'AI';
-     static String teacherdropdownvalue = 'AAMIR  ';
+    static String templatedropdownvalue = 'dr sadaf and zarafshan';
+    static String coursedropdownvalue = 'CC,CS-636';
+     static String teacherdropdownvalue = 'AAMIR  ,BV00073';
      static String radiovalue = '';
     static String semestervalue = '2022SM';
-    static String semester='';
+    static String semester="2021FM";
+    static int questiondropdownvalue= 1;
     static List<dynamic> post=[];
     //static List<String> semesterdropdownvalue=[];
     static List<Navbarmodel> navbarlist=[];
+    static List<Performancemodel> ratinglist=[];
     static List<Courses> courseslist=[];
      static List<Questionmodel> questionlist=[];
      static bool flag1=false;
@@ -55,9 +58,9 @@ class Utilities {
      static String s1="2018SM";
     static String s2="2018SM";
     static String s3="2018SM";
-     static String c1="2018SM";
-    static String c2="2018SM";
-    static String c3="2018SM";
+     static String c1="AI";
+    static String c2="AI";
+    static String c3="AI";
     
     static List<Map<String, dynamic>> selectedCourcesreport = [
       

@@ -15,7 +15,7 @@ class Averagemodel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data =  Map<String, dynamic>();
     data['Emp_no'] = this.empNo;
     data['Question_Desc'] = this.questionDesc;
     data['QuestionCount'] = this.questionCount;

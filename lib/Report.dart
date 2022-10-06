@@ -101,10 +101,9 @@ var Template = TextEditingController();
                   padding: EdgeInsets.symmetric(vertical: 15.0),
                   onPressed: (){
                     EasyLoading.show();
-                    log(Utilities.selectedCourcesreport.toString());
+                   
                   AddTmp();
-                   ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Data Saved Successfully!!!!"),backgroundColor: Colors.green,));
+                  
                    EasyLoading.dismiss();
 
                     // for (int i=0;i<Utilities.reportSelectorCounter;i++) {
@@ -159,25 +158,36 @@ var Template = TextEditingController();
     )));
   }
    AddTmp() async{
+    if(Template.text.isEmpty)
+    {
+          ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("PLease Enter Template Name!!!!"),backgroundColor: Colors.red,));
+    }
+    else{
     for(int i=0;i<Utilities.reportSelectorCounter;i++)
     {
 
-      String url = Utilities.baseurl + "/TeacherEvalutionV2/api/admin/addtemplate";
-    List<dynamic> payload = 
+      String url = Utilities.baseurl + "/TeacherEvalutionV2/api/admin/AddTemplate";
+    var payload = 
                         [
                            {
-                              "Teacher_name":i==0?Utilities.t1:i==1?Utilities.t2:Utilities.t3,
-                              "Course_no":i==0?Utilities.c1:i==1?Utilities.c2:Utilities.c3,
-                              "Semester":i==0?Utilities.s1:i==1?Utilities.s2:Utilities.s3,
-                              "Template_name":Template.text
+                              "TeacherName":i==0?Utilities.t1:i==1?Utilities.t2:Utilities.t3,
+                              "CourseName":i==0?Utilities.c1:i==1?Utilities.c2:Utilities.c3,
+                              "SemesterNo":i==0?Utilities.s1:i==1?Utilities.s2:Utilities.s3,
+                              "Templatename":Template.text
                           }
+    
                         ];
 
-                       var response = await http.post(Uri.parse(url),body: payload);
+                       var response = await http.post(Uri.parse(url),body: jsonEncode(payload),headers: {"Content-Type": "application/json"});
                        if(response.statusCode == 200){
-                          print("Done..........");
+                        print(response.body);
+                           ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Data Saved Successfully!!!!"),backgroundColor: Colors.green,));
                        }
-    }
+   // }
                        
   }
+}
+   }
 }

@@ -65,7 +65,7 @@ DirectorController dir=DirectorController();
                SizedBox(
               height: 25,
             ),
-            MyButton(text: "Login",fontWeight: FontWeight.bold, onTap: ()async {
+            MyButton(text: "Login",fontWeight: FontWeight.bold, onTap: () {
               EasyLoading.show();
              if(Utilities.dropdownValue=='Student')
              {
@@ -76,14 +76,13 @@ DirectorController dir=DirectorController();
              {
                admin(context);
              }
-             else if(Utilities.dropdownValue=='Director')
+             else if(Utilities.dropdownValue=='Director') 
              {
-               if(username.text=='Director'&& password.text=='123')
+              if(username.text=='Director'&& password.text=='123')
                {
-                await dir.gettemplate();
-                 Navigator.pushNamed(context,'/Template');
+                 Navigator.pushNamed(context,'/DirectorChoice');
                  EasyLoading.dismiss();
-               }
+              }
              }
             }),
             const SizedBox(
@@ -105,7 +104,7 @@ DirectorController dir=DirectorController();
     if (request.statusCode == 200) {
       print(request.body.toString());
       Utilities.regno=username.text;
-      Utilities.semester=request.body.toString();
+      // Utilities.semester=request.body.toString();
       EasyLoading.dismiss();
       print('OK Call');
       ScaffoldMessenger.of(context).showSnackBar(

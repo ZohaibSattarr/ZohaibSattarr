@@ -7,6 +7,9 @@ import 'package:teacherevaluation/Admin.dart';
 import 'package:teacherevaluation/View_Course.dart';
 import 'package:teacherevaluation/adminsrc.dart';
 import 'package:teacherevaluation/evaluation.dart';
+import 'DirectorChoice.dart';
+import 'Performance.dart';
+import 'TopTeacher.dart';
 import 'login.dart';
 import 'View_Course.dart';
 import 'Report.dart';
@@ -27,6 +30,9 @@ void main() {
       '/Report': (context) => Report(),
       '/Task':(context) => ReportTask(),
       '/Template':(context) => TemplateTask(),
+       '/Performance':(context) => PerformanceTask(),
+       '/TopTeacher':(context) => TopTeacherTask(),
+       '/DirectorChoice':(context) => DirectorChoiceTask(),
     },
   ));
   // FlutterNativeSplash.remove();

@@ -199,23 +199,7 @@ class _SemesterdropDown extends State<SemesterdropDown> {
           color: Colors.grey[300],
         ),
         onChanged: (String? newValue) {
-          setState(() {
-            if(Utilities.reportSelectorCounter==1)
-            {
-              Utilities.s1=newValue!;
-            }
-            else if(Utilities.reportSelectorCounter==2)
-            {
-              Utilities.s2=newValue!;
-            }
-            else
-            {
-              Utilities.s3=newValue!;
-            }
-            Utilities.semestervalue = newValue;
-           // print(dropdownValue);
-          }
-          );
+           Utilities.semestervalue=newValue!;
         },
         items: <String>['2022SM', '2021FM', '2021SM']
             .map<DropdownMenuItem<String>>((String value) {
@@ -228,6 +212,9 @@ class _SemesterdropDown extends State<SemesterdropDown> {
     );
   }
 }
+
+
+
 
 
 
@@ -271,15 +258,15 @@ class _CourseDropDown extends State<CourseDropDown> {
           setState(() {
               if(Utilities.reportSelectorCounter==1)
             {
-              Utilities.c1=newValue!;
+              Utilities.c1=newValue!.split(",")[1];
             }
             else if(Utilities.reportSelectorCounter==2)
             {
-              Utilities.c2=newValue!;
+              Utilities.c2=newValue!.split(",")[1];
             }
             else
             {
-              Utilities.c3=newValue!;
+              Utilities.c3=newValue!.split(",")[1];
             }
             Utilities.coursedropdownvalue = newValue;
            // print(dropdownValue);
@@ -293,10 +280,9 @@ class _CourseDropDown extends State<CourseDropDown> {
            },
           items: Utilities.CourseList.map((data) {
               return DropdownMenuItem<String>(
-                value:data.title
-                ,
+                value:data.title+","+data.courseNo,
                 child: Text(
-                  data.title,
+                  data.title+","+data.courseNo,
                    style: TextStyle(color: Colors.deepPurpleAccent),
                 ),
               );
@@ -346,15 +332,15 @@ class _TeacherDropDown extends State<TeacherDropDown> {
           setState(() {
              if(Utilities.reportSelectorCounter==1)
             {
-              Utilities.t1=newValue!;
+              Utilities.t1=newValue!.split(",")[1];
             }
             else if(Utilities.reportSelectorCounter==2)
             {
-              Utilities.t2=newValue!;
+              Utilities.t2=newValue!.toString().split(",")[1];
             }
             else
             {
-              Utilities.t3=newValue!;
+              Utilities.t3=newValue!.toString().split(",")[1];
             }
             Utilities.teacherdropdownvalue = newValue;
            // print(dropdownValue);
@@ -368,9 +354,9 @@ class _TeacherDropDown extends State<TeacherDropDown> {
            },
           items: Utilities.TeacherList.map((data) {
               return DropdownMenuItem<String>(
-                value:data.name,
+                value:data.name+","+data.empNo,
                 child: Text(
-                  data.name,
+                  data.name+","+data.empNo,
                    style: TextStyle(color: Colors.deepPurpleAccent),
                 ),
               );
@@ -379,61 +365,22 @@ class _TeacherDropDown extends State<TeacherDropDown> {
     );
   }
 }
-//TemplateDropDown
-class TemplateDropDown extends StatefulWidget {
-  TemplateDropDown({Key? key}) : super(key: key);
+// //TemplateDropDown
+// class TemplateDropDown extends StatefulWidget {
+//   TemplateDropDown({Key? key}) : super(key: key);
 
-  @override
-  State<TemplateDropDown> createState() => _TemplateDropDown();
-}
+//   @override
+//   State<TemplateDropDown> createState() => _TemplateDropDown();
+// }
 
-class _TemplateDropDown extends State<TemplateDropDown> {
+// class _TemplateDropDown extends State<TemplateDropDown> {
   
 
-  @override
-  Widget build(BuildContext context) {  
-    return Container(
-      margin: EdgeInsets.only(top: 5, bottom: 5),
-        width: 120,
-        padding: EdgeInsets.only(top: 1, bottom: 1,left: 1),
-        decoration: BoxDecoration(
-          //color: Colors.deepPurple,
-          // boxShadow: [
-          //   BoxShadow(color: Colors.white.withOpacity(0.4), blurRadius: 10)
-          // ],
-          border: Border.all(color: Colors.white),
-          borderRadius: BorderRadius.circular(12),
-        ),
-      child:  DropdownButton<String>(
-        value: Utilities.templatedropdownvalue,
-          isExpanded: true,
-        icon:  Icon(Icons.arrow_drop_down),
-        //elevation: 40,
-        style:  TextStyle(color: Colors.deepPurple,fontSize:20),
-        underline: Container(
-          height: 2,
-          color: Colors.grey[300],
-        ),
-           onChanged: (String? newValue) {
-          setState(() {
-            Utilities.templatedropdownvalue = newValue!;
-           // print(dropdownValue);
-          }
-          );
-           },
-          items: Utilities.TemplateList.map((data) {
-              return DropdownMenuItem<String>(
-                value:data.templatename,
-                child: Text(
-                  data.templatename,
-                   style: TextStyle(color: Colors.deepPurpleAccent),
-                ),
-              );
-            }).toList(),
-        ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {  
+//     return 
+//   }
+// }
 
 
 
@@ -475,6 +422,23 @@ class _SemesterDropDown extends State<SemesterDropDown> {
           color: Colors.grey[300],
         ),
            onChanged: (String? newValue) {
+             setState(() {
+            if(Utilities.reportSelectorCounter==1)
+            {
+              Utilities.s1=newValue!;
+            }
+            else if(Utilities.reportSelectorCounter==2)
+            {
+              Utilities.s2=newValue!;
+            }
+            else
+            {
+              Utilities.s3=newValue!;
+            }
+            Utilities.semestervalue = newValue;
+           // print(dropdownValue);
+          }
+          );
           setState(() {
             Utilities.semesterdropdownvalue = newValue!;
             Utilities.selectedCourcesreport.add({
@@ -801,7 +765,7 @@ class ReportChart extends StatelessWidget {
         data: data,
         domainFn: (ReportSeries series, _) => series.questionDesc.toString(),
         measureFn: (ReportSeries series, _) => series.averageMarks,
-        colorFn: (ReportSeries series, _) => series.barColor
+       
       )
     ];
 
