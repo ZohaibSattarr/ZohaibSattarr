@@ -9,6 +9,7 @@ using TeacherEvalutionV2;
 using System.Data.SqlClient;
 using System.Data;
 using System.Xml.Linq;
+using Microsoft.Ajax.Utilities;
 
 namespace TeacherEvalutionV2.Controllers
 {
@@ -98,7 +99,30 @@ namespace TeacherEvalutionV2.Controllers
                     CourseName = s.CourseName,
                     SemesterNo = s.SemesterNo,
                     Templatename = s.Templatename
-                }).ToList();
+                }).DistinctBy(p=>p.Templatename).ToList();
+                return Request.CreateResponse(HttpStatusCode.OK, TemplateList);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+        [Route("api/admin/GetTemplateByName/{name}")]
+        [HttpGet]
+        public HttpResponseMessage GetTemplateByName(string name)
+        {
+            try
+            {
+                var TemplateList = db.temples.Select(s => new
+                {
+                    TeacherName = s.TeacherName,
+                    CourseName = s.CourseName,
+                    SemesterNo = s.SemesterNo,
+                    Templatename = s.Templatename
+
+
+                }).Where(x=>x.Templatename==name).ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, TemplateList);
 
             }
@@ -164,6 +188,30 @@ namespace TeacherEvalutionV2.Controllers
                       .Where(x => id.Templatename.Contains(x.Templatename))
                       .ToList()
                       .ForEach(a => a.CourseName = id.CourseName);
+
+                    db.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK, "Saved");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex.Message);
+            }
+
+        }
+        [Route("api/admin/UpdateTeacher")]
+        [HttpPost]
+        public HttpResponseMessage UpdateTeacher(temple id)
+        {
+            try
+            {
+                using (var db = new BiitDBNewEntities13())
+                {
+                    db.temples
+                      .Where(x => id.Templatename.Contains(x.Templatename))
+                      .ToList()
+                      .ForEach(a => a.TeacherName = id.TeacherName);
 
                     db.SaveChanges();
                     return Request.CreateResponse(HttpStatusCode.OK, "Saved");

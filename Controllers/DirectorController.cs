@@ -156,5 +156,105 @@ namespace TeacherEvalutionV2.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
+        [Route("api/Director/getTopRatedTeachers/{question_no}")]
+        [HttpGet]
+        public HttpResponseMessage getTopRatedTeachers(int question_no)
+        {
+            try
+            {
+                
+                var res = db.Evals.Where(w => w.Question_Desc == question_no);
+                var data = res.GroupBy(m => m.Emp_no).Select(x => new
+                {
+                    Emp_name = db.EMPMTRs.Select(s => new { Name = s.Emp_firstname + " " + s.Emp_middle + " " + s.Emp_lastname, Emp_no = s.Emp_no }).FirstOrDefault(w => w.Emp_no == x.Key).Name,
+                    Emp_no = x.Key,
+                    Question_Count = x.Count(),
+                    Rating = x.Average(y => y.Answer_Marks)
+                }).OrderByDescending(o => o.Rating).Take(3).ToList(); //change OrderByDescending to OrderBy to show less rated teachers
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+        [Route("api/Director/getTopTeacher")]
+        [HttpGet]
+        public HttpResponseMessage getTopTeacher()
+        {
+            try
+            {
+                double Rating = 0;
+                    var res = db.Evals.Where(w => w.Question_Desc != 0);
+                     var data = res.GroupBy(m => m.Emp_no).Select(x => new
+                    {
+                        Emp_name = db.EMPMTRs.Select(s => new { Name = s.Emp_firstname + " " + s.Emp_middle + " " + s.Emp_lastname, Emp_no = s.Emp_no }).FirstOrDefault(w => w.Emp_no == x.Key).Name,
+                        Emp_no = x.Key,
+                        Question_Count = x.Count(),
+                        Rating = Rating + x.Average(y => y.Answer_Marks),
+                    }).OrderByDescending(o => o.Rating).ToList();
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+        [HttpGet]
+        [Route("api/Director/BestTeacher/{emp}")]
+        public HttpResponseMessage BestTeacher(string emp)
+        {
+            try
+            {
+                List<dynamic> lst = new List<dynamic>();
+                    var employees = db.Evals.Where(w => w.Emp_no == emp)
+                        .Select(x => new
+                        {
+                            x.Emp_no,
+                            x.Reg_No,
+                            x.Course_no,
+                            x.Question_Desc,
+                            x.Semester_no,
+                            x.Answer_Marks,
+                            x.Answer_Desc
+                        });
+
+                    var data = employees.GroupBy(m => m.Question_Desc).Select(x => new
+                    {
+                        Emp_no = x.FirstOrDefault().Emp_no,
+                        Question_Desc = x.Key,
+                        QuestionCount = x.Count(),
+                        AverageMarks = x.Average(y => y.Answer_Marks)
+                    }).ToList();
+                    lst.Add(data);
+                return Request.CreateResponse(HttpStatusCode.OK, lst);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
+        [Route("api/Director/getTopTeacherBySem/{sem}")]
+        [HttpGet]
+        public HttpResponseMessage getTopTeacherBySem(string sem)
+        {
+            try
+            {
+                double Rating = 0;
+                var res = db.Evals.Where(w => w.Question_Desc != 0 & w.Semester_no==sem);
+                var data = res.GroupBy(m => m.Emp_no).Select(x => new
+                {
+                    Emp_name = db.EMPMTRs.Select(s => new { Name = s.Emp_firstname + " " + s.Emp_middle + " " + s.Emp_lastname, Emp_no = s.Emp_no }).FirstOrDefault(w => w.Emp_no == x.Key).Name,
+                    Emp_no = x.Key,
+                    Question_Count = x.Count(),
+                    Rating = Rating + x.Average(y => y.Answer_Marks),
+                }).OrderByDescending(o => o.Rating).ToList();
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, ex);
+            }
+        }
     }
 }
